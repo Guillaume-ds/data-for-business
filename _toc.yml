@@ -1,0 +1,38 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: intro
+parts:
+
+  - caption: Introduction to Python and Data Science 
+    chapters:
+    - file: 1. Intro/What is data science
+    - file: 1. Intro/What is python
+    - file: 1. Intro/Presentation of this blog
+
+  - caption: Data Manipulation and Data Visualization
+    chapters:
+    - file: 2. Data visualisation/Data manipulation
+    - file: 2. Data visualisation/Data visualisation
+
+  - caption: Supervised Machine Learning
+    chapters:
+    - file: 3. Supervised ML/Regression
+    - file: 3. Supervised ML/Classification
+
+  - caption: Unsupervised Machine Learning
+    chapters:
+    - file: 4. Unsupervised ML/Classification
+
+  - caption: Deep Learning and Optimization
+    chapters:
+    - file: 5. Deep Learning/Neural Networks
+
+  - caption: Data Science for Finance
+    chapters:
+    - file: 6. Data Science for Finance/Financial Data
+  
+  - caption: Data Science and Sustainability
+    chapters:
+    - file: 7. Data Science and Sustainability/Sustainable Data
