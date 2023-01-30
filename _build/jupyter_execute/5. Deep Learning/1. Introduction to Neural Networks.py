@@ -23,7 +23,7 @@
 # ### McCulloch and Pitts neuron - 1943
 
 # <center>
-# <img src="neuron.png">
+# <img src="pictures/neuron.png">
 # </center>
 # 
 
@@ -33,7 +33,7 @@
 # </div>
 # 
 # <center>
-# <img src="perceptron.png">
+# <img src="pictures/perceptron.png">
 # </center>
 # 
 # ### Finding the right parameters
@@ -156,7 +156,7 @@
 # We repeat those steps until we reach the desired level of precision. 
 # 
 # <center>
-# <img src="backpropagation.webp">
+# <img src="pictures/backpropagation.webp">
 # </center>
 
 # ## 3. Hyperparameters of a neural network
@@ -166,7 +166,7 @@
 # When constructing a neural network, you have to make various choices concerning the structure of this network. For instance, you will have to choose the number of hidden layers, the number of neurons per layer, and the activation function within the neurons. There are no hard rules for these, but there are guidelines that will help you to make the right choice.
 # 
 # <center>
-# <img src="structureNN.png">
+# <img src="pictures/structureNN.png">
 # </center>
 
 # ### Main activation functions 
@@ -350,7 +350,7 @@ plt.plot(X,Y3)
 # - **Cross entropy**  :
 # 
 # $$ 
-# C = -\frac{1}{n} \sum_{i=1}^{n} \left[y_{i} \log{\hat{y}_{i}}\right]
+# C(x) = -\frac{1}{n} \sum_{i=1}^{n} \left[y_{i} \log{\hat{y}_{i}}\right]
 # $$
 # 
 # With :
@@ -361,10 +361,10 @@ plt.plot(X,Y3)
 # <div style="text-align: justify">The cross entropyt is also called logarithmic loss, log loss or logistic loss. Each predicted class probability is compared to the actual class desired output 0 or 1 and a score/loss is calculated that penalizes the probability based on how far it is from the actual expected value. The penalty is logarithmic in nature yielding a large score for large differences close to 1 and small score for small differences tending to 0. <br>(see more : https://towardsdatascience.com/cross-entropy-loss-function-f38c4ec8643e)
 # <br><br><em>Exemple</em> : we consider a classification problem with 4 labels. After a few iterations we get a model precise enough to predict correctly the output. However the entropy is still important. After more iteration, the model gets more precise, and its entropy decreases.</div>
 # <center>
-# <img src="CE.png">
+# <img src="pictures/CE.png">
 # </center>
 # <center>
-# <img src="CE_opt.png">
+# <img src="pictures/CE_opt.png">
 # </center>
 
 # ## 4. Regularization

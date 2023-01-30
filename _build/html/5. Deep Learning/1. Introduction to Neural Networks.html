@@ -54,7 +54,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Financial Data" href="../6.%20Data%20Science%20for%20Finance/Financial%20Data.html" />
+    <link rel="next" title="Deep Learning Problems and Optimization" href="2.%20Deep%20Learning%20Optimization.html" />
     <link rel="prev" title="Classification" href="../4.%20Unsupervised%20ML/Classification.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -189,6 +189,11 @@ const thebe_selector_output = ".output, .cell_output"
    Introduction to Neural Networks
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="2.%20Deep%20Learning%20Optimization.html">
+   Deep Learning Problems and Optimization
+  </a>
+ </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
@@ -272,7 +277,7 @@ title="Toggle navigation"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/5. Deep Learning/Neural Networks.ipynb"
+        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/5. Deep Learning/1. Introduction to Neural Networks.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -328,7 +333,7 @@ title="Source repository"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="../_sources/5. Deep Learning/Neural Networks.ipynb"
+        <a href="../_sources/5. Deep Learning/1. Introduction to Neural Networks.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -403,6 +408,11 @@ title="Print to PDF"
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#finding-the-right-parameters">
+     Finding the right parameters
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#adaline-and-madaline-1959">
      ADALINE and MADALINE - 1959
     </a>
@@ -516,6 +526,11 @@ title="Print to PDF"
     </a>
    </li>
   </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#in-conclusion">
+   5. In conclusion
+  </a>
  </li>
 </ul>
 
@@ -552,6 +567,11 @@ title="Print to PDF"
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#finding-the-right-parameters">
+     Finding the right parameters
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#adaline-and-madaline-1959">
      ADALINE and MADALINE - 1959
     </a>
@@ -666,6 +686,11 @@ title="Print to PDF"
    </li>
   </ul>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#in-conclusion">
+   5. In conclusion
+  </a>
+ </li>
 </ul>
 
                         </nav>
@@ -694,7 +719,7 @@ A neuron is a basic unit in a neural network composed of an input layer, an outp
 </div><section id="mcculloch-and-pitts-neuron-1943">
 <h3>McCulloch and Pitts neuron - 1943<a class="headerlink" href="#mcculloch-and-pitts-neuron-1943" title="Permalink to this headline">#</a></h3>
 <center>
-<img src="neuron.png">
+<img src="pictures/neuron.png">
 </center>
 </section>
 <section id="the-perceptron-1958">
@@ -703,25 +728,25 @@ A neuron is a basic unit in a neural network composed of an input layer, an outp
 The perceptron algorithm was invented in 1958 by Frank Rosenblatt and is the foundation of modern neural networks. It is an algorithm for supervised learning of binary classifier that is composed of a single-layer feed-forward neural network that uses a step function as its activation function. It can be used for supervised learning, where the output is known and the algorithm is trained to predict the correct output for a given input. The perceptron is a linear classifier, meaning it assigns a binary label to each input vector. The perceptron algorithm is often used in supervised learning tasks such as image recognition and natural language processing.
 </div>
 <center>
-<img src="perceptron.png">
+<img src="pictures/perceptron.png">
 </center>
+</section>
+<section id="finding-the-right-parameters">
+<h3>Finding the right parameters<a class="headerlink" href="#finding-the-right-parameters" title="Permalink to this headline">#</a></h3>
+<div style="text-align: justify">
+For each of these neurons, a vector of containing the observations and the biais is passed as the input. For every element of the vector, there is a corresponding weight that will be passed in the activation function with the observation. In order to tune the neuron, we have to estimate the vector of weights by proceeding as follow : 
+</div>
 <p>We have the data set <span class="math notranslate nohighlight">\(D_n\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[
 D_n = {(X_i,y_i)_{i \in [1,n]}} 
 \]</div>
-<div class="math notranslate nohighlight">
-\[
-\text{with input data of size d : } {X_i} \in R^d
-\]</div>
-<div class="math notranslate nohighlight">
-\[
-\text{and the output : } {y_i} \in \{-1,1\} 
-\]</div>
-<p>And the vector of weights and biaises:
-$<span class="math notranslate nohighlight">\(
-\tilde{w} = (w_1, ... , w_n, b)
-\)</span>$</p>
+<p>With :</p>
+<ul class="simple">
+<li><p>The input data of size d : <span class="math notranslate nohighlight">\( {X_i} \in R^n \)</span></p></li>
+<li><p>The output : <span class="math notranslate nohighlight">\( {y_i} \in \{-1,1\} \)</span></p></li>
+<li><p>The vector of weights and biaises : <span class="math notranslate nohighlight">\( \tilde{w} = (w_1, ... , w_n, b)\)</span></p></li>
+</ul>
 <p>How do we estimate <span class="math notranslate nohighlight">\(\tilde{w}\)</span> ?</p>
 <ol class="simple">
 <li><p>Start with : <span class="math notranslate nohighlight">\(\tilde{w} = 0\)</span></p></li>
@@ -730,16 +755,15 @@ $<span class="math notranslate nohighlight">\(
 <br> Else  : <span class="math notranslate nohighlight">\( \tilde{w} \Leftarrow \tilde{w}\)</span></p></li>
 </ol>
 <p>The perceptron algorithm can be seen as a stochastic gradient descent :</p>
-<center>
-<p><span class="math notranslate nohighlight">\( \tilde{w}_{t+1} \leftarrow \tilde{w}_t - \eta \nabla_w \mathcal{L}(\tilde{w}_t) \)</span></p>
-</center>
+<div class="math notranslate nohighlight">
+\[ 
+\tilde{w}_{t+1} \leftarrow \tilde{w}_t - \eta \nabla_w \mathcal{L}(\tilde{w}_t) 
+\]</div>
 <p>With the corresponding loss function :</p>
-<center>
 <div class="math notranslate nohighlight">
 \[ 
 \mathcal{L}(\tilde{w}_t) = -\sum_{i \in [1,n]}y_i &lt;\tilde{w},\tilde{x_i}&gt; 
 \]</div>
-</center>
 <p>The theorem of Block and Novikoff in 1963 showed that if the data set is linearly separable, then the number of update k of the perceptron is bounded by : <span class="math notranslate nohighlight">\( k+1 \le \frac{1 + R^2}{\gamma^2} \)</span>, with <span class="math notranslate nohighlight">\( \gamma = \min{y_i &lt;\tilde{w^*},\tilde{x_i}&gt;} \)</span></p>
 <div style="text-align: justify">
 As a consequence, the perceptron converge only if the data is linearly separable. Therefore, the hopes that the reserchers and the army had placed in the perceptron were shattered and thus began the first "AI winter", in the late 60s. 
@@ -750,7 +774,7 @@ As a consequence, the perceptron converge only if the data is linearly separable
 Those two algorithms aimed to solve real world problems, with non linearly separable data. They are based on similar neurons as the ones before with a loss function defined as the square diffference between a weighted sum of inputs and the output. The optimization procedure consists in a trivial gradient descent computed before the output function. 
 </div>
 <center>
-<img src="Adaline.png">
+<img src="pictures/Adaline.png">
 </center></section>
 </section>
 <section id="backpropagation-how-to-find-the-weights-and-biais">
@@ -800,7 +824,7 @@ We then proceed to train the neural network in 4 steps :
 <div>
 <p>We repeat those steps until we reach the desired level of precision.</p>
 <center>
-<img src="backpropagation.webp">
+<img src="pictures/backpropagation.webp">
 </center></section>
 </section>
 <section id="hyperparameters-of-a-neural-network">
@@ -809,7 +833,7 @@ We then proceed to train the neural network in 4 steps :
 <h3>What are the hyperparameters ?<a class="headerlink" href="#what-are-the-hyperparameters" title="Permalink to this headline">#</a></h3>
 <p>When constructing a neural network, you have to make various choices concerning the structure of this network. For instance, you will have to choose the number of hidden layers, the number of neurons per layer, and the activation function within the neurons. There are no hard rules for these, but there are guidelines that will help you to make the right choice.</p>
 <center>
-<img src="structureNN.png">
+<img src="pictures/structureNN.png">
 </center></section>
 <section id="main-activation-functions">
 <h3>Main activation functions<a class="headerlink" href="#main-activation-functions" title="Permalink to this headline">#</a></h3>
@@ -844,10 +868,10 @@ plt.plot(np.sort(X),np.sort(Y))
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x122ef8280&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x1365f8280&gt;]
 </pre></div>
 </div>
-<img alt="../_images/Neural Networks_20_1.png" src="../_images/Neural Networks_20_1.png" />
+<img alt="../_images/1. Introduction to Neural Networks_19_1.png" src="../_images/1. Introduction to Neural Networks_19_1.png" />
 </div>
 </div>
 </section>
@@ -868,10 +892,10 @@ plt.plot(X,Y)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x1230007f0&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x136a00820&gt;]
 </pre></div>
 </div>
-<img alt="../_images/Neural Networks_22_1.png" src="../_images/Neural Networks_22_1.png" />
+<img alt="../_images/1. Introduction to Neural Networks_21_1.png" src="../_images/1. Introduction to Neural Networks_21_1.png" />
 </div>
 </div>
 </section>
@@ -892,10 +916,10 @@ plt.plot(X,Y)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x12306b760&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x136a6b400&gt;]
 </pre></div>
 </div>
-<img alt="../_images/Neural Networks_24_1.png" src="../_images/Neural Networks_24_1.png" />
+<img alt="../_images/1. Introduction to Neural Networks_23_1.png" src="../_images/1. Introduction to Neural Networks_23_1.png" />
 </div>
 </div>
 </section>
@@ -917,10 +941,10 @@ plt.plot(X,Y)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x1230d79a0&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x136b000a0&gt;]
 </pre></div>
 </div>
-<img alt="../_images/Neural Networks_26_1.png" src="../_images/Neural Networks_26_1.png" />
+<img alt="../_images/1. Introduction to Neural Networks_25_1.png" src="../_images/1. Introduction to Neural Networks_25_1.png" />
 </div>
 </div>
 </section>
@@ -945,10 +969,10 @@ plt.plot(X,Y)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x123270f40&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x136b71240&gt;]
 </pre></div>
 </div>
-<img alt="../_images/Neural Networks_28_1.png" src="../_images/Neural Networks_28_1.png" />
+<img alt="../_images/1. Introduction to Neural Networks_27_1.png" src="../_images/1. Introduction to Neural Networks_27_1.png" />
 </div>
 </div>
 </section>
@@ -972,10 +996,10 @@ plt.plot(X,Y)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x1232d9930&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x136bd9990&gt;]
 </pre></div>
 </div>
-<img alt="../_images/Neural Networks_30_1.png" src="../_images/Neural Networks_30_1.png" />
+<img alt="../_images/1. Introduction to Neural Networks_29_1.png" src="../_images/1. Introduction to Neural Networks_29_1.png" />
 </div>
 </div>
 </section>
@@ -1001,10 +1025,10 @@ plt.plot(X,Y3)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x123547880&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x136c479a0&gt;]
 </pre></div>
 </div>
-<img alt="../_images/Neural Networks_32_1.png" src="../_images/Neural Networks_32_1.png" />
+<img alt="../_images/1. Introduction to Neural Networks_31_1.png" src="../_images/1. Introduction to Neural Networks_31_1.png" />
 </div>
 </div>
 <p>A rule of thumb consists in using ReLU at first, then Swish, and to avoid sigmoid functions.</p>
@@ -1022,46 +1046,45 @@ C(x) = \frac{1}{n} \sum_{i=1}^{n} \mathcal{l} (Y_i,f_\theta(X_i))
 \]</div>
 <p>There are 4 main loss functions :</p>
 <ul class="simple">
-<li><p>Mean Square Error (MSE) :</p></li>
+<li><p><strong>Mean Square Error (MSE)</strong> :</p></li>
 </ul>
 <div class="math notranslate nohighlight">
 \[
 C(x) = \frac{1}{n} \sum_{i=1}^{n} (Y_i - f_\theta(X_i))^2
 \]</div>
 <ul class="simple">
-<li><p>Mean Absolute Error :</p></li>
+<li><p><strong>Mean Absolute Error</strong> :</p></li>
 </ul>
 <div class="math notranslate nohighlight">
 \[
 C(x) = \frac{1}{n} \sum_{i=1}^{n} \vert Y_i - f_\theta(X_i) \vert
 \]</div>
 <ul class="simple">
-<li><p>0 - 1 error :</p></li>
+<li><p><strong>0 - 1 error</strong> :</p></li>
 </ul>
 <div class="math notranslate nohighlight">
 \[
 C(x) = \frac{1}{n} \sum_{i=1}^{n} \textit{1}_{Y_i \ne f_\theta(X_i)}
 \]</div>
-<ul>
-<li><p>Cross entropy  :
-<br></p>
-  <div style="text-align: justify">Also called logarithmic loss, log loss or logistic loss. Each predicted class probability is compared to the actual class desired output 0 or 1 and a score/loss is calculated that penalizes the probability based on how far it is from the actual expected value. The penalty is logarithmic in nature yielding a large score for large differences close to 1 and small score for small differences tending to 0. <br>(see more : https://towardsdatascience.com/cross-entropy-loss-function-f38c4ec8643e)</div>
-</li>
+<ul class="simple">
+<li><p><strong>Cross entropy</strong>  :</p></li>
 </ul>
 <div class="math notranslate nohighlight">
 \[ 
-C = -\frac{1}{n} \sum_{i=1}^{n} \left[y_{i} \log{\hat{y}_{i}}\right]
+C(x) = -\frac{1}{n} \sum_{i=1}^{n} \left[y_{i} \log{\hat{y}_{i}}\right]
 \]</div>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\text{with} \hspace{0.2cm} {y_i} \in \{0,1\} \hspace{0.2cm} \text{the true output} \\ \text{and} \hspace{0.2cm} \hat{y}_{i} \hspace{0.2cm} \text{the estimated output} \in [0,1]
-\end{split}\]</div>
-<div style="text-align: justify">Exemple : we consider a classification problem with 4 labels. After a few iterations we get a model precise enough to predict correctly the output. However the entropy is still important. After more iteration, the model gets more precise, and its entropy decreases.</div>
+<p>With :</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( {y_i} \in \{0,1\} \)</span> the true output</p></li>
+<li><p><span class="math notranslate nohighlight">\( \hat{y}_{i} \in [0,1] \)</span> the estimated output</p></li>
+</ul>
+<div style="text-align: justify">The cross entropyt is also called logarithmic loss, log loss or logistic loss. Each predicted class probability is compared to the actual class desired output 0 or 1 and a score/loss is calculated that penalizes the probability based on how far it is from the actual expected value. The penalty is logarithmic in nature yielding a large score for large differences close to 1 and small score for small differences tending to 0. <br>(see more : https://towardsdatascience.com/cross-entropy-loss-function-f38c4ec8643e)
+<br><br><em>Exemple</em> : we consider a classification problem with 4 labels. After a few iterations we get a model precise enough to predict correctly the output. However the entropy is still important. After more iteration, the model gets more precise, and its entropy decreases.</div>
 <center>
-<img src="CE.png">
+<img src="pictures/CE.png">
 </center>
 <center>
-<img src="CE_opt.png">
+<img src="pictures/CE_opt.png">
 </center></section>
 </section>
 <section id="regularization">
@@ -1103,8 +1126,8 @@ pen(\theta) = \lambda \vert\vert \theta \vert\vert_1
 \[
 pen(\theta) = \lambda \vert\vert \theta \vert\vert_2^2 + \lambda \vert\vert \theta \vert\vert_1
 \]</div>
-<p>Remider : the p-norm is defined as :  <span class="math notranslate nohighlight">\( \left\|x\right\|_p = (\sum_{i=1}^{n}\vert x_i \vert^p)^{\frac{1}{p}} \)</span></p>
-<p>Note : the lasso regression induce sparsity, that is that the features that are not relevant are set to zero, what reduces the dimension of the weights vector</p>
+<p><em>Remider</em> : the p-norm is defined as :  <span class="math notranslate nohighlight">\( \left\|x\right\|_p = (\sum_{i=1}^{n}\vert x_i \vert^p)^{\frac{1}{p}} \)</span></p>
+<p><em>Note</em> : the lasso regression induce sparsity, that is that the features that are not relevant are set to zero, what reduces the dimension of the weights vector</p>
 </section>
 <section id="dropout">
 <h3>Dropout<a class="headerlink" href="#dropout" title="Permalink to this headline">#</a></h3>
@@ -1125,6 +1148,13 @@ The main idea behind early stopping is to stop the algorithm after k steps witho
 the algorithm the number of times it will run without improvement before stopping.
 </div></section>
 </section>
+<section id="in-conclusion">
+<h2>5. In conclusion<a class="headerlink" href="#in-conclusion" title="Permalink to this headline">#</a></h2>
+<div style="text-align:justify">
+A neural network is composed of a succession of layers, each of them corresponding to a set of neurons. Each neuron will recieve an input and return an output value computed with an activation function. Therefore, the quality of the predictions of the neural network will depend on the choice of the activation function, the number of layers and the depth of each layer. Thus it is necessary to chose those hyperparameters with great caution. Then begin the training phase and the weights and biaises of each neuron will be computed through a recursive process. The training of the neural network implies choosing a regularization function, that will affect the values of the weights. 
+<br><br>
+Now, we will see how to use thoses notions in order to create a functionning neural network. 
+</div></section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1161,10 +1191,10 @@ the algorithm the number of times it will run without improvement before stoppin
             <p class="prev-next-title">Classification</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="../6.%20Data%20Science%20for%20Finance/Financial%20Data.html" title="next page">
+    <a class='right-next' id="next-link" href="2.%20Deep%20Learning%20Optimization.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Financial Data</p>
+        <p class="prev-next-title">Deep Learning Problems and Optimization</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

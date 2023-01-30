@@ -27,7 +27,8 @@ parts:
 
   - caption: Deep Learning and Optimization
     chapters:
-    - file: 5. Deep Learning/Neural Networks
+    - file: 5. Deep Learning/1. Introduction to Neural Networks
+    - file: 5. Deep Learning/2. Deep Learning Optimization
 
   - caption: Data Science for Finance
     chapters:
