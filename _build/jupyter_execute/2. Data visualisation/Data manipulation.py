@@ -2,9 +2,3 @@
 # coding: utf-8
 
 # # Data Manipulation
-
-# In[ ]:
-
-
-
-

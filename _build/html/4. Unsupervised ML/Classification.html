@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Classification &#8212; Data Science for Business</title>
+    <title>&lt;no title&gt; &#8212; Data Science for Business</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -50,9 +50,11 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Neural Network" href="../5.%20Deep%20Learning/Neural%20Networks.html" />
+    <link rel="next" title="Introduction to Neural Networks" href="../5.%20Deep%20Learning/1.%20Introduction%20to%20Neural%20Networks.html" />
     <link rel="prev" title="Classification" href="../3.%20Supervised%20ML/Classification.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -146,6 +148,11 @@ const thebe_selector_output = ".output, .cell_output"
    Data Manipulation
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2.%20Data%20visualisation/Data%20visualization.html">
+   Data Visualization
+  </a>
+ </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
@@ -166,25 +173,23 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Unsupervised Machine Learning
- </span>
-</p>
-<ul class="current nav bd-sidenav">
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Classification
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
   Deep Learning and Optimization
  </span>
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../5.%20Deep%20Learning/Neural%20Networks.html">
-   Neural Network
+  <a class="reference internal" href="../5.%20Deep%20Learning/1.%20Introduction%20to%20Neural%20Networks.html">
+   Introduction to Neural Networks
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../5.%20Deep%20Learning/2.%20Deep%20Learning%20Optimization.html">
+   Deep Learning Problems and Optimization
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../5.%20Deep%20Learning/3.%20Convolution%20Neural%20Networks.html">
+   Convolutional Neural Networks
   </a>
  </li>
 </ul>
@@ -363,23 +368,50 @@ title="Print to PDF"
     </ul>
   </div>
 </div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
 
     </div>
 </div>
 
 <!-- Table of contents -->
 <div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="simple visible nav section-nav flex-column">
+</ul>
+
+    </nav>
 </div>
     </div>
     <div class="article row">
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Classification</h1>
+                <h1><no title></h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="simple visible nav section-nav flex-column">
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -387,9 +419,13 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="classification">
-<h1>Classification<a class="headerlink" href="#classification" title="Permalink to this headline">#</a></h1>
-</section>
+  <style>body {text-align: justify}</style>
+<div style="text-align:center;">
+<h1>Dimension Reduction and Clustering</h1>
+</div><p>Unsupervised machine learning consist in working with unlabeled data in order to create clusters or groups of observations sharing similar features. Contrary to supervised learning, the dataset only stores observations :</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{D} = \{X_1, ... ,X_n \} \in \mathcal{X}^n\]</div>
+<p>However, the dimension of <span class="math notranslate nohighlight">\( \mathcal{X} \)</span> often makes it hard to work with. Therefore, one the first task to do in unsupervised machine learning is to reduce the dimension of the space. This can be done with a map <span class="math notranslate nohighlight">\( \phi \)</span> from <span class="math notranslate nohighlight">\( \mathcal{X} \)</span> to a new space <span class="math notranslate nohighlight">\( \mathcal{X}' \)</span> of smaller dimension.</p>
 
     <script type="text/x-thebe-config">
     {
@@ -425,10 +461,10 @@ title="Print to PDF"
             <p class="prev-next-title">Classification</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="../5.%20Deep%20Learning/Neural%20Networks.html" title="next page">
+    <a class='right-next' id="next-link" href="../5.%20Deep%20Learning/1.%20Introduction%20to%20Neural%20Networks.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Neural Network</p>
+        <p class="prev-next-title">Introduction to Neural Networks</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

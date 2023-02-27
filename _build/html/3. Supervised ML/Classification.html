@@ -50,9 +50,11 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Classification" href="../4.%20Unsupervised%20ML/Classification.html" />
+    <link rel="next" title="Dimension Reduction and Clustering" href="../4.%20Unsupervised%20ML/Clustering.html" />
     <link rel="prev" title="Regression" href="Regression.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -146,6 +148,11 @@ const thebe_selector_output = ".output, .cell_output"
    Data Manipulation
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2.%20Data%20visualisation/Data%20visualization.html">
+   Data Visualization
+  </a>
+ </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
@@ -171,8 +178,8 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../4.%20Unsupervised%20ML/Classification.html">
-   Classification
+  <a class="reference internal" href="../4.%20Unsupervised%20ML/Clustering.html">
+   Dimension Reduction and Clustering
   </a>
  </li>
 </ul>
@@ -183,8 +190,18 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../5.%20Deep%20Learning/Neural%20Networks.html">
-   Neural Network
+  <a class="reference internal" href="../5.%20Deep%20Learning/1.%20Introduction%20to%20Neural%20Networks.html">
+   Introduction to Neural Networks
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../5.%20Deep%20Learning/2.%20Deep%20Learning%20Optimization.html">
+   Deep Learning Problems and Optimization
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../5.%20Deep%20Learning/3.%20Convolution%20Neural%20Networks.html">
+   Convolutional Neural Networks
   </a>
  </li>
 </ul>
@@ -363,12 +380,119 @@ title="Print to PDF"
     </ul>
   </div>
 </div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
 
     </div>
 </div>
 
 <!-- Table of contents -->
 <div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#what-is-classification">
+   What is Classification
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#training-the-model">
+     1. Training the model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#predict-new-values">
+     2. Predict new values
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-does-a-classification-model-work">
+   How does a classification model work?
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-loss-function">
+     The loss function
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#what-are-the-mains-challenges">
+     What are the mains challenges
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-to-implement-classification-with-python">
+   How to implement classification with python :
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#load-the-data">
+     1. Load the data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#clean-and-visualize-the-data">
+     2. Clean and visualize the data
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#outsiders">
+       1. Outsiders
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#correlation">
+       2. Correlation
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#discrete-values">
+       3. Discrete values
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#continous-values">
+       4. Continous values
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#create-the-model">
+     3. Create the model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#train-the-model">
+     4. Train the model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#make-predictions">
+     5. Make predictions
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
 </div>
     </div>
     <div class="article row">
@@ -380,6 +504,102 @@ title="Print to PDF"
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#what-is-classification">
+   What is Classification
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#training-the-model">
+     1. Training the model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#predict-new-values">
+     2. Predict new values
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-does-a-classification-model-work">
+   How does a classification model work?
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-loss-function">
+     The loss function
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#what-are-the-mains-challenges">
+     What are the mains challenges
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-to-implement-classification-with-python">
+   How to implement classification with python :
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#load-the-data">
+     1. Load the data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#clean-and-visualize-the-data">
+     2. Clean and visualize the data
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#outsiders">
+       1. Outsiders
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#correlation">
+       2. Correlation
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#discrete-values">
+       3. Discrete values
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#continous-values">
+       4. Continous values
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#create-the-model">
+     3. Create the model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#train-the-model">
+     4. Train the model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#make-predictions">
+     5. Make predictions
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -389,6 +609,635 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="classification">
 <h1>Classification<a class="headerlink" href="#classification" title="Permalink to this headline">#</a></h1>
+<section id="what-is-classification">
+<h2>What is Classification<a class="headerlink" href="#what-is-classification" title="Permalink to this headline">#</a></h2>
+<div style="text-align:justify">
+Classification consists in taking a vector of inputs X to produce a vector of outputs Y that will associate each input x to a class. The training data set is composed of the vector X of n observations (that can include b parameters), and Y the vector the associated true values. The algorithm will try to minimize a loss function in order to create a model that can predict the class of each x with a certain level of precision. During the training phase, the true output is already defined and is given to the algorithm so it can learn how to differenciate those classes. Once the model is trained, it is supposed to be able to correctly predict those output for new values.
+<br><br>
+An example of classification could be to predict the added value of a new client : small, average, important. The input could include the type of client (individual or company), the location of the store in which they made their first purchase, the amount of their first purchase, the day of the week... The model will transform the input vector in a value corresponding to one of the classes. During the training phase, you should take data that already exists. Here is a simple example of a classification model : 
+</div>
+<section id="training-the-model">
+<h3>1. Training the model<a class="headerlink" href="#training-the-model" title="Permalink to this headline">#</a></h3>
+<center>
+<img src="pictures/classificationTraining.png">
+</center>
+</section>
+<section id="predict-new-values">
+<h3>2. Predict new values<a class="headerlink" href="#predict-new-values" title="Permalink to this headline">#</a></h3>
+<center>
+<img src="./pictures/classificationPredictions.png">
+</center>
+</section>
+</section>
+<section id="how-does-a-classification-model-work">
+<h2>How does a classification model work?<a class="headerlink" href="#how-does-a-classification-model-work" title="Permalink to this headline">#</a></h2>
+<div style="text-align:justify">
+Once the data is correclty collected, cleaned and formated, you can proceed to develop and train a classification model. There are several algorithm that will help you to do this task. However, it is important to understand how they work under the hood, and the right way to use them.
+</div>
+<section id="the-loss-function">
+<h3>The loss function<a class="headerlink" href="#the-loss-function" title="Permalink to this headline">#</a></h3>
+<div style="text-align:justify">
+As specified in the graphs above, one of the main part of the training process consist in comparing the predicted values to the true output. <br>
+For a classification problem, the loss can be defined as : 
+</div>
+<div class="math notranslate nohighlight">
+\[\mathcal{l}(Y,f(X)) = \sum_{i=1}^{n} 1_{Y_i \ne f(X_i)}\]</div>
+</section>
+<section id="what-are-the-mains-challenges">
+<h3>What are the mains challenges<a class="headerlink" href="#what-are-the-mains-challenges" title="Permalink to this headline">#</a></h3>
+<div style="text-align:justify">
+As classification greatly depends on the quality of the input, therefore the first challenge we encounter is to feed the model with the proper data and the right amount of information. Indeed, giving too much information to the model can lead to over-fitting, especially if the information is not independ. It will also take more time to train the model and to get precise results. On the other hand, by not giving enough data to the model, you won't be able to train it correctly and it will never reach a correct level of precision. 
+</div></section>
+</section>
+<section id="how-to-implement-classification-with-python">
+<h2>How to implement classification with python :<a class="headerlink" href="#how-to-implement-classification-with-python" title="Permalink to this headline">#</a></h2>
+<div style="text-align:justify">
+In this example, I choose to do imports as we go. This is supposed to help you understand in which situation and part of the process the different packages are useful. However, in reality, a good practice is to import all the packages in the first cell of the notebook. 
+</div><section id="load-the-data">
+<h3>1. Load the data<a class="headerlink" href="#load-the-data" title="Permalink to this headline">#</a></h3>
+<div style="text-align:justify">
+Pandas and numpy are the main packages used for loading/creating data sets. However, in a real case scenario, you might need a specific package to access a data base (boto3, sql...) or to do data transformation.
+<br><br>
+</div>
+<div style="text-align:justify">
+Then, download the data set : https://www.kaggle.com/datasets/altruistdelhite04/loan-prediction-problem-dataset?resource=download) and unzip the file and load it in python with pandas. As the data sets are from an external source, we will check that there are correctly splited.
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd 
+import numpy as np 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>train = pd.read_csv(&quot;../datasets/loan/train.csv&quot;)
+test = pd.read_csv(&quot;../datasets/loan/test.csv&quot;)
+
+print(list(train.columns))
+print(list(test.columns),&quot;\n&quot;)
+
+S1 = set(train[&quot;Loan_ID&quot;])
+S2 = set(test[&quot;Loan_ID&quot;])
+
+if S1.intersection(S2) != set():
+    print(&quot;Error, there are common elements in train and test data sets : &quot;, S1.intersection(S2))
+else:
+    print(&quot;Datasets are correctly splited&quot;)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;Loan_ID&#39;, &#39;Gender&#39;, &#39;Married&#39;, &#39;Dependents&#39;, &#39;Education&#39;, &#39;Self_Employed&#39;, &#39;ApplicantIncome&#39;, &#39;CoapplicantIncome&#39;, &#39;LoanAmount&#39;, &#39;Loan_Amount_Term&#39;, &#39;Credit_History&#39;, &#39;Property_Area&#39;, &#39;Loan_Status&#39;]
+[&#39;Loan_ID&#39;, &#39;Gender&#39;, &#39;Married&#39;, &#39;Dependents&#39;, &#39;Education&#39;, &#39;Self_Employed&#39;, &#39;ApplicantIncome&#39;, &#39;CoapplicantIncome&#39;, &#39;LoanAmount&#39;, &#39;Loan_Amount_Term&#39;, &#39;Credit_History&#39;, &#39;Property_Area&#39;] 
+
+Datasets are correctly splited
+</pre></div>
+</div>
+</div>
+</div>
+<div style="text-align:justify">
+Now that the data has been loaded and that we checked that the two datasets are different, we can do data exploration.
+</div></section>
+<section id="clean-and-visualize-the-data">
+<h3>2. Clean and visualize the data<a class="headerlink" href="#clean-and-visualize-the-data" title="Permalink to this headline">#</a></h3>
+<div style="text-align:justify">
+We will import two libraries for data visualisation : seaborn and matplotlib are very common library used for data visualization. Other common are ggplot, altair ...
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt 
+import seaborn as sns
+</pre></div>
+</div>
+</div>
+</div>
+<div style="text-align:justify">
+First, let's look at the type of data. We will focuse on the train dataset. Some useful functions are head, info, isnull and describe. We see that Loan_ID is not a relevant field for our problem, therefre we can drop it immediatly. 
+</div><div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>train.head()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Loan_ID</th>
+      <th>Gender</th>
+      <th>Married</th>
+      <th>Dependents</th>
+      <th>Education</th>
+      <th>Self_Employed</th>
+      <th>ApplicantIncome</th>
+      <th>CoapplicantIncome</th>
+      <th>LoanAmount</th>
+      <th>Loan_Amount_Term</th>
+      <th>Credit_History</th>
+      <th>Property_Area</th>
+      <th>Loan_Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>LP001002</td>
+      <td>Male</td>
+      <td>No</td>
+      <td>0</td>
+      <td>Graduate</td>
+      <td>No</td>
+      <td>5849</td>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>360.0</td>
+      <td>1.0</td>
+      <td>Urban</td>
+      <td>Y</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>LP001003</td>
+      <td>Male</td>
+      <td>Yes</td>
+      <td>1</td>
+      <td>Graduate</td>
+      <td>No</td>
+      <td>4583</td>
+      <td>1508.0</td>
+      <td>128.0</td>
+      <td>360.0</td>
+      <td>1.0</td>
+      <td>Rural</td>
+      <td>N</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>LP001005</td>
+      <td>Male</td>
+      <td>Yes</td>
+      <td>0</td>
+      <td>Graduate</td>
+      <td>Yes</td>
+      <td>3000</td>
+      <td>0.0</td>
+      <td>66.0</td>
+      <td>360.0</td>
+      <td>1.0</td>
+      <td>Urban</td>
+      <td>Y</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>LP001006</td>
+      <td>Male</td>
+      <td>Yes</td>
+      <td>0</td>
+      <td>Not Graduate</td>
+      <td>No</td>
+      <td>2583</td>
+      <td>2358.0</td>
+      <td>120.0</td>
+      <td>360.0</td>
+      <td>1.0</td>
+      <td>Urban</td>
+      <td>Y</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>LP001008</td>
+      <td>Male</td>
+      <td>No</td>
+      <td>0</td>
+      <td>Graduate</td>
+      <td>No</td>
+      <td>6000</td>
+      <td>0.0</td>
+      <td>141.0</td>
+      <td>360.0</td>
+      <td>1.0</td>
+      <td>Urban</td>
+      <td>Y</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>train.drop(&#39;Loan_ID&#39;,axis=1,inplace=True)
+train.describe()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ApplicantIncome</th>
+      <th>CoapplicantIncome</th>
+      <th>LoanAmount</th>
+      <th>Loan_Amount_Term</th>
+      <th>Credit_History</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>614.000000</td>
+      <td>614.000000</td>
+      <td>592.000000</td>
+      <td>600.00000</td>
+      <td>564.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>5403.459283</td>
+      <td>1621.245798</td>
+      <td>146.412162</td>
+      <td>342.00000</td>
+      <td>0.842199</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>6109.041673</td>
+      <td>2926.248369</td>
+      <td>85.587325</td>
+      <td>65.12041</td>
+      <td>0.364878</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>150.000000</td>
+      <td>0.000000</td>
+      <td>9.000000</td>
+      <td>12.00000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>2877.500000</td>
+      <td>0.000000</td>
+      <td>100.000000</td>
+      <td>360.00000</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>3812.500000</td>
+      <td>1188.500000</td>
+      <td>128.000000</td>
+      <td>360.00000</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>5795.000000</td>
+      <td>2297.250000</td>
+      <td>168.000000</td>
+      <td>360.00000</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>81000.000000</td>
+      <td>41667.000000</td>
+      <td>700.000000</td>
+      <td>480.00000</td>
+      <td>1.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>train.isnull().sum()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Gender               13
+Married               3
+Dependents           15
+Education             0
+Self_Employed        32
+ApplicantIncome       0
+CoapplicantIncome     0
+LoanAmount           22
+Loan_Amount_Term     14
+Credit_History       50
+Property_Area         0
+Loan_Status           0
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div style="text-align:justify">
+As we can see, there are many null values. Keeping them like this would negatively affect the performance of the model, therefore we have to find a way to remove those values. One way to deal with such values is to simply remove the data entry. However, this reduces the size of the data set on which we will train the model. As a consequence, it is often better to find a way to replace null values by other values that are likely to be close to the truth. This can be done by inserting the most common value or the mode, the mean, a zero value... <br>
+Here we will treat each cases differently : 
+</div><ul class="simple">
+<li><p>Drop NA</p></li>
+</ul>
+<div style="text-align:justify">
+For LoanAmount and Credit_History we can either replace the missing values by their means, or drop the entries with missing values. As both of those fields have an important standart deviations in comparison to their mean, it could create a significant noise to replace them by their mean (cf. describe table). Therefore, we will drop the lines with either a missing loan amount or loan amount term. We can do that with the dropna function by specifying the columns in which it should look for NA values. 
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>train = train.dropna(subset=[&#39;LoanAmount&#39;, &#39;Credit_History&#39;])
+train[[&#39;LoanAmount&#39;, &#39;Credit_History&#39;]].isnull().sum()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LoanAmount        0
+Credit_History    0
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Fill with the mean</p></li>
+</ul>
+<div style="text-align:justify">
+For Loan_Amount_Term we can replace the missing values by the mean of this duration.
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>Mean_Amout_Term = int(train[&#39;Loan_Amount_Term&#39;].mean())
+print(&quot;Missing values will be replaced by : &quot;,Mean_Amout_Term)
+train[&#39;Loan_Amount_Term&#39;].fillna(Mean_Amout_Term ,inplace=True)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Missing values will be replaced by :  342
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Fill with the mode</p></li>
+</ul>
+<div style="text-align:justify">
+For other fields we can replace the missing values by their mode. This would make sense as their mean is close to this value. 
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(&quot;The mode of Gender history is : &quot;,train[&#39;Self_Employed&#39;].mode()[0]) 
+train[&#39;Married&#39;].fillna(train[&#39;Married&#39;].mode()[0],inplace=True)
+train[&#39;Gender&#39;].fillna(train[&#39;Gender&#39;].mode()[0],inplace=True)
+train[&#39;Self_Employed&#39;].fillna(train[&#39;Self_Employed&#39;].mode()[0],inplace=True)
+train[&#39;Dependents&#39;].fillna(train[&#39;Dependents&#39;].mode()[0],inplace=True)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mode of Gender history is :  No
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s recount the missing values now :</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>train.isnull().sum()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Gender               0
+Married              0
+Dependents           0
+Education            0
+Self_Employed        0
+ApplicantIncome      0
+CoapplicantIncome    0
+LoanAmount           0
+Loan_Amount_Term     0
+Credit_History       0
+Property_Area        0
+Loan_Status          0
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>train.info()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+Int64Index: 543 entries, 1 to 613
+Data columns (total 12 columns):
+ #   Column             Non-Null Count  Dtype  
+---  ------             --------------  -----  
+ 0   Gender             543 non-null    object 
+ 1   Married            543 non-null    object 
+ 2   Dependents         543 non-null    object 
+ 3   Education          543 non-null    object 
+ 4   Self_Employed      543 non-null    object 
+ 5   ApplicantIncome    543 non-null    int64  
+ 6   CoapplicantIncome  543 non-null    float64
+ 7   LoanAmount         543 non-null    float64
+ 8   Loan_Amount_Term   543 non-null    float64
+ 9   Credit_History     543 non-null    float64
+ 10  Property_Area      543 non-null    object 
+ 11  Loan_Status        543 non-null    object 
+dtypes: float64(4), int64(1), object(7)
+memory usage: 55.1+ KB
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>train.nunique()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Gender                 2
+Married                2
+Dependents             4
+Education              2
+Self_Employed          2
+ApplicantIncome      455
+CoapplicantIncome    252
+LoanAmount           194
+Loan_Amount_Term      10
+Credit_History         2
+Property_Area          3
+Loan_Status            2
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div style="text-align:justify">
+Those results are making sense, except for dependents that is an "object" (see train.info()) when it is supposed to be an integer. As we can see below, values above 3 are regrouped in a unique field "+3" that we can replace by "3" as in order to have only integer. 
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>train[&#39;Dependents&#39;].value_counts()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0     319
+2      92
+1      86
+3+     46
+Name: Dependents, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>train[&#39;Dependents&#39;].replace(&#39;3+&#39;,3,inplace=True)
+train[&#39;Dependents&#39;]=train[&#39;Dependents&#39;].astype(&#39;int&#39;)
+train[&#39;Dependents&#39;].value_counts()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    319
+2     92
+1     86
+3     46
+Name: Dependents, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div style="text-align:justify">
+Now that the trained dataset is cleaned, we can use data visualisation in order to get a better understanding of our working material. We will look for outsiders values, correlations...
+</div><section id="outsiders">
+<h4>1. Outsiders<a class="headerlink" href="#outsiders" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sns.catplot(data=train,kind=&#39;box&#39;)
+plt.xticks(rotation=45)
+plt.grid()
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Classification_28_0.png" src="../_images/Classification_28_0.png" />
+</div>
+</div>
+</section>
+<section id="correlation">
+<h4>2. Correlation<a class="headerlink" href="#correlation" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.figure(figsize=(15,5))
+sns.heatmap(train.corr(),annot=True)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/5w/k34nxpys5nxfvb9s2kv_4kr80000gn/T/ipykernel_50721/1603077357.py:2: FutureWarning: The default value of numeric_only in DataFrame.corr is deprecated. In a future version, it will default to False. Select only valid columns or specify the value of numeric_only to silence this warning.
+  sns.heatmap(train.corr(),annot=True)
+</pre></div>
+</div>
+<img alt="../_images/Classification_30_1.png" src="../_images/Classification_30_1.png" />
+</div>
+</div>
+</section>
+<section id="discrete-values">
+<h4>3. Discrete values<a class="headerlink" href="#discrete-values" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>Discrete_Values = [&#39;Loan_Status&#39;,&#39;Gender&#39;, &#39;Married&#39;, &#39;Dependents&#39;, &#39;Education&#39;, &#39;Self_Employed&#39;, &#39;Loan_Amount_Term&#39;, &#39;Credit_History&#39;, &#39;Property_Area&#39;]
+
+fig, axs = plt.subplots(figsize=(25,6),ncols=3,nrows=3)
+plt.subplots_adjust(hspace=0.5)
+
+for column, ax in zip(Discrete_Values, axs.ravel()):
+    sns.countplot(x=train[column],hue=train[&#39;Loan_Status&#39;],ax=ax)
+
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Classification_32_0.png" src="../_images/Classification_32_0.png" />
+</div>
+</div>
+</section>
+<section id="continous-values">
+<h4>4. Continous values<a class="headerlink" href="#continous-values" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>Continous_Values = [&#39;ApplicantIncome&#39;,&#39;CoapplicantIncome&#39;, &#39;LoanAmount&#39;, &#39;Loan_Amount_Term&#39;, &#39;ApplicantIncome&#39;]
+
+fig, axs = plt.subplots(figsize=(25,6),ncols=5,nrows=1)
+plt.subplots_adjust(hspace=0.5)
+
+for column, ax in zip(Continous_Values, axs.ravel()):
+    sns.kdeplot(x=train[column],hue=train[&#39;Loan_Status&#39;],ax=ax,fill=True)
+plt.show()
+
+fig, axs = plt.subplots(figsize=(25,6),ncols=5,nrows=1)
+plt.subplots_adjust(hspace=0.5)
+for column, ax in zip(Continous_Values, axs.ravel()):
+    sns.kdeplot(x=train[column],hue=train[&#39;Gender&#39;],ax=ax,fill=True)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Classification_34_0.png" src="../_images/Classification_34_0.png" />
+<img alt="../_images/Classification_34_1.png" src="../_images/Classification_34_1.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="create-the-model">
+<h3>3. Create the model<a class="headerlink" href="#create-the-model" title="Permalink to this headline">#</a></h3>
+</section>
+<section id="train-the-model">
+<h3>4. Train the model<a class="headerlink" href="#train-the-model" title="Permalink to this headline">#</a></h3>
+</section>
+<section id="make-predictions">
+<h3>5. Make predictions<a class="headerlink" href="#make-predictions" title="Permalink to this headline">#</a></h3>
+</section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -425,10 +1274,10 @@ title="Print to PDF"
             <p class="prev-next-title">Regression</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="../4.%20Unsupervised%20ML/Classification.html" title="next page">
+    <a class='right-next' id="next-link" href="../4.%20Unsupervised%20ML/Clustering.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Classification</p>
+        <p class="prev-next-title">Dimension Reduction and Clustering</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

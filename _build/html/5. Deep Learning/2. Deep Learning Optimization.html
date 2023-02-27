@@ -54,7 +54,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Financial Data" href="../6.%20Data%20Science%20for%20Finance/Financial%20Data.html" />
+    <link rel="next" title="Convolutional Neural Networks" href="3.%20Convolution%20Neural%20Networks.html" />
     <link rel="prev" title="Introduction to Neural Networks" href="1.%20Introduction%20to%20Neural%20Networks.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -148,6 +148,11 @@ const thebe_selector_output = ".output, .cell_output"
    Data Manipulation
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2.%20Data%20visualisation/Data%20visualization.html">
+   Data Visualization
+  </a>
+ </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
@@ -173,8 +178,8 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../4.%20Unsupervised%20ML/Classification.html">
-   Classification
+  <a class="reference internal" href="../4.%20Unsupervised%20ML/Clustering.html">
+   Dimension Reduction and Clustering
   </a>
  </li>
 </ul>
@@ -192,6 +197,11 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Deep Learning Problems and Optimization
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="3.%20Convolution%20Neural%20Networks.html">
+   Convolutional Neural Networks
   </a>
  </li>
 </ul>
@@ -396,6 +406,23 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#main-challenges">
    Main challenges :
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#convex-functions">
+     Convex functions
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#strongly-convex-functions">
+     Strongly Convex functions
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#l-smooth-functions">
+     L-Smooth functions
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#gradient-descent-procedure">
@@ -403,8 +430,62 @@ title="Print to PDF"
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#convex-function">
-     Convex Function
+    <a class="reference internal nav-link" href="#tyler-expansion-around-a-point">
+     Tyler expansion around a point :
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#convergence-of-gradient-descent">
+     Convergence of Gradient Descent :
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#stochastic-gradient-descent">
+     Stochastic Gradient Descent
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#convegence-rates">
+   Convegence rates
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#gradient-methods-with-reduced-variance">
+   Gradient methods with reduced variance
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#sag-saga">
+     SAG &amp; SAGA
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#svrg">
+     SVRG
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#newton-s-method-for-smooth-functions">
+     Newton’s method for smooth functions
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#momentum-methods">
+   Momentum methods
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#polyak-s-momentum-algorithm">
+     Polyak’s momentum algorithm
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#nesterov-s-momentum-algorithm-improved-polyak-s-momentum-algorithm">
+     Nesterov’s momentum algorithm : improved Polyak’s momentum algorithm
     </a>
    </li>
   </ul>
@@ -432,6 +513,23 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#main-challenges">
    Main challenges :
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#convex-functions">
+     Convex functions
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#strongly-convex-functions">
+     Strongly Convex functions
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#l-smooth-functions">
+     L-Smooth functions
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#gradient-descent-procedure">
@@ -439,8 +537,62 @@ title="Print to PDF"
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#convex-function">
-     Convex Function
+    <a class="reference internal nav-link" href="#tyler-expansion-around-a-point">
+     Tyler expansion around a point :
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#convergence-of-gradient-descent">
+     Convergence of Gradient Descent :
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#stochastic-gradient-descent">
+     Stochastic Gradient Descent
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#convegence-rates">
+   Convegence rates
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#gradient-methods-with-reduced-variance">
+   Gradient methods with reduced variance
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#sag-saga">
+     SAG &amp; SAGA
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#svrg">
+     SVRG
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#newton-s-method-for-smooth-functions">
+     Newton’s method for smooth functions
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#momentum-methods">
+   Momentum methods
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#polyak-s-momentum-algorithm">
+     Polyak’s momentum algorithm
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#nesterov-s-momentum-algorithm-improved-polyak-s-momentum-algorithm">
+     Nesterov’s momentum algorithm : improved Polyak’s momentum algorithm
     </a>
    </li>
   </ul>
@@ -469,21 +621,88 @@ Optimization is a crucial step in deep learning, that concerns every problem wit
 <li><p>Cost of gradient computing</p></li>
 <li><p>Irregularity of a twice differentiable function :</p>
 <ul>
-<li><p>L-smooth if : <span class="math notranslate nohighlight">\( \forall w \in R^d, eig[f''(w)]\le L \)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(L\)</span>-smooth if : <span class="math notranslate nohighlight">\( \forall w \in R^d, eig[f''(w)]\le L \)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(\mu\)</span>-strongly convex if : <span class="math notranslate nohighlight">\(\forall w \in R^d, eig[f''(w)]\ge \mu \)</span></p></li>
 </ul>
 </li>
 </ul>
 <div style="text-align:justify">
 Those are some of the main challenges we encouter while doing optimization. Therefore, it is important to understand precisely how we can tackle such issues. 
-</div></section>
+</div>
+<section id="convex-functions">
+<h3>Convex functions<a class="headerlink" href="#convex-functions" title="Permalink to this headline">#</a></h3>
+<p>Convex functions are easier to study and help to solve optimization problems.</p>
+<p><span class="math notranslate nohighlight">\( f : R^d \rightarrow R\)</span> is a convex function if :</p>
+<div class="math notranslate nohighlight">
+\[
+f(\lambda x + (1-\lambda)y)\le \lambda f(x) + (1-\lambda)f(y) \hspace{0.4cm }\forall (x,y)\in R^d,\lambda \in [0,1]
+\]</div>
+<p>If f is differentiable, it is convex if :</p>
+<div class="math notranslate nohighlight">
+\[
+f(x) \ge f(y) + \langle \nabla f(y),x-y \rangle \hspace{0.4cm }\forall (x,y)\in R^d
+\]</div>
+<p>Also, if f is twice differentiable, it is convex if :</p>
+<div class="math notranslate nohighlight">
+\[
+h^T \nabla^2f(x)h \ge 0 \hspace{0.4cm }\forall h\in R^d, x \in R
+\]</div>
+<p><em>Remark: Those conditions are all necessary and sufficient if the function is twice differentiable, i.e. verifying one implies that the others are verified.</em></p>
+<p>Therefore, for a twice differentiable function we can compute <span class="math notranslate nohighlight">\( f(w) \)</span>, but also <span class="math notranslate nohighlight">\( \nabla f(w) \)</span> to learn in wich direction f is increasing and <span class="math notranslate nohighlight">\( \nabla^2 f(w) \)</span> to see the curvature of the function. Computing the two derivatives helps to solve optimization problems faster. There are two types of algorithm that use this idea :</p>
+<ol class="simple">
+<li><p><strong>First-order algorithm</strong> : Use <span class="math notranslate nohighlight">\( f(w) \)</span> and <span class="math notranslate nohighlight">\( \nabla f(w) \)</span> for differentiable and convex functions.</p></li>
+<li><p><strong>Second-order algorithm</strong> : Use <span class="math notranslate nohighlight">\( f(w) \)</span>, <span class="math notranslate nohighlight">\( \nabla f(w) \)</span> and <span class="math notranslate nohighlight">\( \nabla^2 f(w) \)</span>. It is very efficient when computing the Hessian Matrix is not to time consumming.</p></li>
+</ol>
+</section>
+<section id="strongly-convex-functions">
+<h3>Strongly Convex functions<a class="headerlink" href="#strongly-convex-functions" title="Permalink to this headline">#</a></h3>
+<p><span class="math notranslate nohighlight">\( f : R^d \rightarrow R\)</span> is a <span class="math notranslate nohighlight">\(\mu\)</span>-strongly convex function if the following function is also convex :</p>
+<div class="math notranslate nohighlight">
+\[
+w \rightarrow f(w) - \frac{\mu}{2}\vert\vert w \vert\vert^2_2
+\]</div>
+<p>Equivalently :</p>
+<div class="math notranslate nohighlight">
+\[
+f(w) \ge f(w') + \langle\nabla f(w'),w-w' \rangle + \frac{\mu}{2}\vert\vert w - w' \vert\vert^2
+\]</div>
+<p>Graphically, a smooth-convex function is above the tangent and the tangent + <span class="math notranslate nohighlight">\(\mu\)</span> x quadratic function :</p>
+<center>
+<img src="pictures/stronglyConvex.png">
+</center>
+</section>
+<section id="l-smooth-functions">
+<h3>L-Smooth functions<a class="headerlink" href="#l-smooth-functions" title="Permalink to this headline">#</a></h3>
+<p>A function f is said to be <span class="math notranslate nohighlight">\(L\)</span>-smooth if f is twice differentiable and if :</p>
+<div class="math notranslate nohighlight">
+\[
+\vert\vert \nabla f(x) - \nabla f(y) \vert\vert \le \mathcal{L} \vert\vert x - y \vert\vert \hspace{0.4cm }\forall (x,y)\in R^d
+\]</div>
+<p>Equivalently :</p>
+<div class="math notranslate nohighlight">
+\[
+f(w) \le f(w') + \langle\nabla f(w'),w-w' \rangle + \frac{\mathcal{L}}{2}\vert\vert w - w' \vert\vert^2
+\]</div>
+<p>Graphically, a smooth-convex function is above the tangent and below the tangent + quadratic function :</p>
+<center>
+<img src="pictures/Lsmooth.png">
+</center></section>
+</section>
 <section id="gradient-descent-procedure">
 <h2>Gradient Descent Procedure<a class="headerlink" href="#gradient-descent-procedure" title="Permalink to this headline">#</a></h2>
-<p>We aim at minimizing a function <span class="math notranslate nohighlight">\( f : R^d \rightarrow R\)</span></p>
+<p>We aim at minimizing a function <span class="math notranslate nohighlight">\( f : R^d \rightarrow R\)</span>. However, local extremum are making it difficult to find the overall extrema.</p>
+<p>Here are two exemples, in 1d and 2d:</p>
 <div style="display:flex;justify-content: space-around;">
 <img src="pictures/minimum.png">
 <img src="pictures/minimum2D.png">
-</div><p>In order to solve this problem, we have ton compute the gradient of the function, which is the vector of partial derivatives :</p>
+<br>
+</div>
+<p>We search the vector of weights : <span class="math notranslate nohighlight">\( \tilde{w} = (w_1, ... , w_n, b)\)</span></p>
+<p>We do an iterative procedure in order to find the correct <span class="math notranslate nohighlight">\(\tilde{w}\)</span>
+$<span class="math notranslate nohighlight">\( 
+\tilde{w}_{t+1} \leftarrow \tilde{w}_t - \eta \nabla_w \mathcal{L}(\tilde{w}_t) 
+\)</span>$</p>
+<p>In order to solve this problem, we have ton compute the gradient of the function, which is the vector of partial derivatives :</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \nabla f(\left.x_{1}, x_{2}, \ldots, x_{n}\right)=\left[\begin{array}{c}
@@ -493,8 +712,6 @@ Those are some of the main challenges we encouter while doing optimization. Ther
 \dfrac{\partial f}{\partial x_n}(\left.x_{1}, x_{2}, \ldots, x_{n}\right) 
 \end{array}\right]
 \end{split}\]</div>
-<p>We call <em>critical points</em> the points such that <span class="math notranslate nohighlight">\( \nabla f(w^*) = 0 \)</span></p>
-<p><em>Remark</em> critical points are not always extrema !</p>
 <p>If this function is twice differenciable, we can compute the hessian matrix given by :</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -506,8 +723,117 @@ Those are some of the main challenges we encouter while doing optimization. Ther
     \frac{\partial^2 f}{\partial x_n \partial x_1} &amp; \frac{\partial^2 f}{\partial x_n \partial x_2} &amp; \dots &amp; \frac{\partial^2 f}{\partial x_n^2}
 \end{bmatrix}
 \end{split}\]</div>
-<section id="convex-function">
-<h3>Convex Function<a class="headerlink" href="#convex-function" title="Permalink to this headline">#</a></h3>
+<p>We call <em>critical points</em> or <em>local extremum</em> the points such that <span class="math notranslate nohighlight">\( \nabla f(w^*) = 0 \)</span>.</p>
+<ul class="simple">
+<li><p>If <span class="math notranslate nohighlight">\(w^*\)</span> is a local minimum, then <span class="math notranslate nohighlight">\( \nabla f(w^*)=0\)</span> and <span class="math notranslate nohighlight">\(\nabla^2f(w^*)\)</span> is positive semi-definite.</p></li>
+<li><p>If <span class="math notranslate nohighlight">\( \nabla f(w^*)=0\)</span> and <span class="math notranslate nohighlight">\(\nabla^2f(w^*)\)</span> then <span class="math notranslate nohighlight">\(w^*\)</span> is a local optimum.</p></li>
+</ul>
+<p><em>Remark: critical points are not always extrema !</em></p>
+<p>There are two main types of algorithm for a gradient descent procedure : Gradient Descent (GD) and Stochastic Gradient Descent (SGD). They are useful for convex and smooth functions, but there results vary depending on the type of function.</p>
+<center>
+<img src="pictures/gradientEfficiency.png">
+</center>
+<section id="tyler-expansion-around-a-point">
+<h3>Tyler expansion around a point :<a class="headerlink" href="#tyler-expansion-around-a-point" title="Permalink to this headline">#</a></h3>
+<div class="math notranslate nohighlight">
+\[ 
+f(w) = f(w^{(0)}) + \langle \nabla f(w^{(0)}),w-w^{(0)} \rangle + O(\vert\vert w - w^{(0)} \vert\vert)
+\]</div>
+</section>
+<section id="convergence-of-gradient-descent">
+<h3>Convergence of Gradient Descent :<a class="headerlink" href="#convergence-of-gradient-descent" title="Permalink to this headline">#</a></h3>
+<p>Let <span class="math notranslate nohighlight">\( f : R^d \rightarrow R\)</span> be a <span class="math notranslate nohighlight">\(L\)</span>-smooth convex function, with <span class="math notranslate nohighlight">\(w*\)</span> the minimum of <span class="math notranslate nohighlight">\(f\)</span> on <span class="math notranslate nohighlight">\(R^d\)</span>.</p>
+<p>Then, with a step size <span class="math notranslate nohighlight">\(\eta \le \frac{1}{L}\)</span> :</p>
+<div class="math notranslate nohighlight">
+\[
+f(w^{k}) - f(w^*) \le \frac{\vert\vert w^{(0)} - w^* \vert\vert^2_2 }{2\eta k}
+\]</div>
+<p>In particular for : <span class="math notranslate nohighlight">\(\eta = \frac{1}{L}\)</span> :</p>
+<div class="math notranslate nohighlight">
+\[
+f(w^{k}) - f(w^*) \le L \frac{\vert\vert w^{(0)} - w^* \vert\vert^2_2 }{2}
+\]</div>
+<p>iterations are sufficient to get an <span class="math notranslate nohighlight">\(\epsilon\)</span>-approximation of the minimal value of <span class="math notranslate nohighlight">\(f\)</span></p>
+<p>And we naturaly choose to do the gradient descent as follow :</p>
+<div class="math notranslate nohighlight">
+\[
+ 
+w^{(k+1)} = w^{(k)} - \frac{1}{L} \nabla f(w^{(k)})\]</div>
+<p>Let <span class="math notranslate nohighlight">\( f : R^d \rightarrow R\)</span> be a <span class="math notranslate nohighlight">\(L\)</span>-smooth, <span class="math notranslate nohighlight">\(\mu\)</span>-strongly convex function, with <span class="math notranslate nohighlight">\(w*\)</span> the minimum of <span class="math notranslate nohighlight">\(f\)</span> on <span class="math notranslate nohighlight">\(R^d\)</span>.</p>
+<p>Then, with a step size <span class="math notranslate nohighlight">\(\eta \le \frac{1}{L}\)</span> :</p>
+<div class="math notranslate nohighlight">
+\[
+f(w^{k}) - f(w^*) \le \frac{L}{2} (1- \eta \mu)^k \vert\vert w^{(0)} - w^* \vert\vert^2_2
+\]</div>
+</section>
+<section id="stochastic-gradient-descent">
+<h3>Stochastic Gradient Descent<a class="headerlink" href="#stochastic-gradient-descent" title="Permalink to this headline">#</a></h3>
+<p>TBD</p>
+</section>
+</section>
+<section id="convegence-rates">
+<h2>Convegence rates<a class="headerlink" href="#convegence-rates" title="Permalink to this headline">#</a></h2>
+<p>Number of iterations for a precision <span class="math notranslate nohighlight">\(\epsilon\)</span> :</p>
+<ul class="simple">
+<li><p>GD = <span class="math notranslate nohighlight">\( k \ge \frac{1}{\epsilon} \)</span></p></li>
+<li><p>SGD = <span class="math notranslate nohighlight">\( k \ge \frac{1}{\epsilon^2} \)</span></p></li>
+</ul>
+<p>Complexity per iteration :</p>
+<ul class="simple">
+<li><p>GD = <span class="math notranslate nohighlight">\(nd\)</span></p></li>
+<li><p>SGD = <span class="math notranslate nohighlight">\(d\)</span></p></li>
+</ul>
+<p>Total complexity for a precision <span class="math notranslate nohighlight">\(\epsilon\)</span> :</p>
+<ul class="simple">
+<li><p>GD = <span class="math notranslate nohighlight">\( \frac{nd}{\epsilon} \)</span></p></li>
+<li><p>SGD = <span class="math notranslate nohighlight">\( \frac{d}{\epsilon^2} \)</span></p></li>
+</ul>
+</section>
+<section id="gradient-methods-with-reduced-variance">
+<h2>Gradient methods with reduced variance<a class="headerlink" href="#gradient-methods-with-reduced-variance" title="Permalink to this headline">#</a></h2>
+<section id="sag-saga">
+<h3>SAG &amp; SAGA<a class="headerlink" href="#sag-saga" title="Permalink to this headline">#</a></h3>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}w_k = w_{k-1} - \frac{\eta}{n} \sum^n_{i=1}{g_k(i)}\\\hspace{0.5cm} \text{with} \hspace{0.2cm}\\\begin{split}{g_k(i)} = \left\{ \begin{array}{ll}
+\nabla f_i (w_{k-1}) &amp; \text{if} i = i_k \\ 
+{g_{k-1}(i)} &amp; \text{otherwise}
+\end{array} \right. \end{split}\end{aligned}\end{align} \]</div>
+</section>
+<section id="svrg">
+<h3>SVRG<a class="headerlink" href="#svrg" title="Permalink to this headline">#</a></h3>
+</section>
+<section id="newton-s-method-for-smooth-functions">
+<h3>Newton’s method for smooth functions<a class="headerlink" href="#newton-s-method-for-smooth-functions" title="Permalink to this headline">#</a></h3>
+<div class="math notranslate nohighlight">
+\[
+f(w) \approx f(w') + \nabla f(w')^T(w-w') + \frac{1}{2} (w - w')^T \nabla^2 f(w')(w-w')
+\]</div>
+<p>With a step :</p>
+<div class="math notranslate nohighlight">
+\[
+d_k
+ = - [\nabla^2 f(w_k)]^{-1} \nabla f(w_k) 
+\]</div>
+</section>
+</section>
+<section id="momentum-methods">
+<h2>Momentum methods<a class="headerlink" href="#momentum-methods" title="Permalink to this headline">#</a></h2>
+<section id="polyak-s-momentum-algorithm">
+<h3>Polyak’s momentum algorithm<a class="headerlink" href="#polyak-s-momentum-algorithm" title="Permalink to this headline">#</a></h3>
+<p>Do until convergence :</p>
+<ol class="simple">
+<li><p><span class="math notranslate nohighlight">\( v^{(k)} = \beta (w^{(k)} - w^{(k+1)}) - \eta_k \nabla f(w^{(k)}) \)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\( w^{(k+1)} = w^{(k)} + v^{(k)} \)</span></p></li>
+</ol>
+<p>Polyak’s algorithm can fail and start repeating cycles</p>
+</section>
+<section id="nesterov-s-momentum-algorithm-improved-polyak-s-momentum-algorithm">
+<h3>Nesterov’s momentum algorithm : improved Polyak’s momentum algorithm<a class="headerlink" href="#nesterov-s-momentum-algorithm-improved-polyak-s-momentum-algorithm" title="Permalink to this headline">#</a></h3>
+<p>Do until convergence :</p>
+<ol class="simple">
+<li><p><span class="math notranslate nohighlight">\( v^{(k)} = w^{(k)} - \eta_k \nabla f(w^{(k)}) \)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\( w^{(k+1)} = v^{(k+1)} + \beta_{k+1}(v^{(k+1)} - v^{(k)}) \)</span></p></li>
+</ol>
 </section>
 </section>
 </section>
@@ -546,10 +872,10 @@ Those are some of the main challenges we encouter while doing optimization. Ther
             <p class="prev-next-title">Introduction to Neural Networks</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="../6.%20Data%20Science%20for%20Finance/Financial%20Data.html" title="next page">
+    <a class='right-next' id="next-link" href="3.%20Convolution%20Neural%20Networks.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Financial Data</p>
+        <p class="prev-next-title">Convolutional Neural Networks</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

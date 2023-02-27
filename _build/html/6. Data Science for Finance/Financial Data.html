@@ -50,10 +50,12 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Sustainable Data" href="../7.%20Data%20Science%20and%20Sustainability/Sustainable%20Data.html" />
-    <link rel="prev" title="Neural Network" href="../5.%20Deep%20Learning/Neural%20Networks.html" />
+    <link rel="prev" title="Convolutional Neural Networks" href="../5.%20Deep%20Learning/3.%20Convolution%20Neural%20Networks.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -146,6 +148,11 @@ const thebe_selector_output = ".output, .cell_output"
    Data Manipulation
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2.%20Data%20visualisation/Data%20visualization.html">
+   Data Visualization
+  </a>
+ </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
@@ -171,8 +178,8 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../4.%20Unsupervised%20ML/Classification.html">
-   Classification
+  <a class="reference internal" href="../4.%20Unsupervised%20ML/Clustering.html">
+   Dimension Reduction and Clustering
   </a>
  </li>
 </ul>
@@ -183,8 +190,18 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../5.%20Deep%20Learning/Neural%20Networks.html">
-   Neural Network
+  <a class="reference internal" href="../5.%20Deep%20Learning/1.%20Introduction%20to%20Neural%20Networks.html">
+   Introduction to Neural Networks
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../5.%20Deep%20Learning/2.%20Deep%20Learning%20Optimization.html">
+   Deep Learning Problems and Optimization
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../5.%20Deep%20Learning/3.%20Convolution%20Neural%20Networks.html">
+   Convolutional Neural Networks
   </a>
  </li>
 </ul>
@@ -262,6 +279,35 @@ title="Toggle navigation"
         
     </div>
     <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/6. Data Science for Finance/Financial Data.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
 <button onclick="toggleFullScreen()"
   class="headerbtn"
   data-toggle="tooltip"
@@ -334,12 +380,43 @@ title="Print to PDF"
     </ul>
   </div>
 </div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
 
     </div>
 </div>
 
 <!-- Table of contents -->
 <div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#basic-financial-contracts-and-their-prices">
+   1 - Basic Financial contracts and their prices
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#options">
+     Options
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
 </div>
     </div>
     <div class="article row">
@@ -351,6 +428,26 @@ title="Print to PDF"
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#basic-financial-contracts-and-their-prices">
+   1 - Basic Financial contracts and their prices
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#options">
+     Options
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -360,6 +457,37 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="financial-data">
 <h1>Financial Data<a class="headerlink" href="#financial-data" title="Permalink to this headline">#</a></h1>
+<section id="basic-financial-contracts-and-their-prices">
+<h2>1 - Basic Financial contracts and their prices<a class="headerlink" href="#basic-financial-contracts-and-their-prices" title="Permalink to this headline">#</a></h2>
+<p>Futur cash flow denoted <span class="math notranslate nohighlight">\(A_T\)</span> :</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(T\)</span> is the maturity, a time horizon in the futur</p></li>
+<li><p>The value <span class="math notranslate nohighlight">\(A_T\)</span> is unknown today</p></li>
+</ul>
+<p>The spot price <span class="math notranslate nohighlight">\( price_t(A_T,T)\)</span> :</p>
+<ul class="simple">
+<li><p>It is the price to pay at time <span class="math notranslate nohighlight">\(t\)</span> in order to receive <span class="math notranslate nohighlight">\(A_T\)</span> at <span class="math notranslate nohighlight">\(T\)</span></p></li>
+</ul>
+<p>The forward price <span class="math notranslate nohighlight">\( F_t(A_T,T)\)</span> :</p>
+<ul class="simple">
+<li><p>It is the price determined at time <span class="math notranslate nohighlight">\(t\)</span> but to pay at <span class="math notranslate nohighlight">\(T\)</span> in order to receive <span class="math notranslate nohighlight">\(A_T\)</span></p></li>
+</ul>
+<p>At time <span class="math notranslate nohighlight">\(t\)</span>, we enter into a forward contract by agreeing on the value of <span class="math notranslate nohighlight">\( F_t(A_T,T)\)</span>. However, there are no cash flow at that time : the price to pay to enter a forward is 0.</p>
+<p><em>A long position in a forward is to receive <span class="math notranslate nohighlight">\(A_T\)</span> and pay <span class="math notranslate nohighlight">\(F\)</span></em></p>
+<p><em>A short position in a forward is to receive <span class="math notranslate nohighlight">\(F\)</span> in exchange for <span class="math notranslate nohighlight">\(A_T\)</span></em></p>
+<p>We assume that there ie a risk-free rate r such that N eur invested at t = N(1 + r (T-t)) at T</p>
+<p>So for any cash flox <span class="math notranslate nohighlight">\(A_T\)</span> we have :</p>
+<div class="math notranslate nohighlight">
+\[
+F_t(A_T,T) = price_t(A_T,T)(1+r(T-t))
+\]</div>
+<p>Value at time = <span class="math notranslate nohighlight">\( F_t(A_T,T) - price_t(A_T,T)(1+r(T-t))\)</span></p>
+<section id="options">
+<h3>Options<a class="headerlink" href="#options" title="Permalink to this headline">#</a></h3>
+<p>An option is a financial contract whose value at maturity T depends on the value of S
+The option payoff = <span class="math notranslate nohighlight">\(g(S_T)\)</span></p>
+</section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -389,11 +517,11 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="../5.%20Deep%20Learning/Neural%20Networks.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="../5.%20Deep%20Learning/3.%20Convolution%20Neural%20Networks.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Neural Network</p>
+            <p class="prev-next-title">Convolutional Neural Networks</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="../7.%20Data%20Science%20and%20Sustainability/Sustainable%20Data.html" title="next page">

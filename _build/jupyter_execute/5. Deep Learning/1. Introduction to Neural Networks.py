@@ -57,11 +57,11 @@
 # 
 # 1. Start with : $\tilde{w} = 0$ 
 # 
-# 2. If : $ \hspace{0.2cm} y_i <\tilde{w},\tilde{x_i}>  \hspace{0.2cm} \le 0 \hspace{0.2cm} \implies \hspace{0.2cm} y_i \ne pred(y_i) $ 
+# 2. If : $ \hspace{0.2cm} y_i <\tilde{w},\tilde{x_i}>  \hspace{0.2cm} \le 0 \hspace{0.2cm} \implies \hspace{0.2cm}y_i \ne pred(y_i) $ 
 # <br> Then : $ \tilde{w} \Leftarrow \tilde{w} + y_i \tilde{x_i}$
 # <br> Else &nbsp;: $ \tilde{w} \Leftarrow \tilde{w}$
 # 
-# The perceptron algorithm can be seen as a stochastic gradient descent : 
+# The perceptron algorithm can be seen as a gradient descent : 
 # 
 # $$ 
 # \tilde{w}_{t+1} \leftarrow \tilde{w}_t - \eta \nabla_w \mathcal{L}(\tilde{w}_t) 
@@ -70,7 +70,7 @@
 # With the corresponding loss function : 
 # 
 # $$ 
-# \mathcal{L}(\tilde{w}_t) = -\sum_{i \in [1,n]}y_i <\tilde{w},\tilde{x_i}> 
+# \mathcal{L}(\tilde{w}_t) = -\sum_{i \in [1,n]}1_{y_i <\tilde{w},\tilde{x_i}> < 0}
 # $$
 # 
 # The theorem of Block and Novikoff in 1963 showed that if the data set is linearly separable, then the number of update k of the perceptron is bounded by : $ k+1 \le \frac{1 + R^2}{\gamma^2} $, with $ \gamma = \min{y_i <\tilde{w^*},\tilde{x_i}>} $
@@ -84,7 +84,25 @@
 # Those two algorithms aimed to solve real world problems, with non linearly separable data. They are based on similar neurons as the ones before with a loss function defined as the square diffference between a weighted sum of inputs and the output. The optimization procedure consists in a trivial gradient descent computed before the output function. 
 # </div>
 # <center>
-# <img src="Adaline.png">
+# <img src="pictures/Adaline.png">
+# </center>
+# 
+# ### 3. Strucutre of a neural network 
+# 
+# <center>
+# <img src="pictures/Structure_neural_network.png">
+# </center>
+# 
+# In practice we don't use the raw equations, instead we use vectorization to represent the functions of the layers. 
+# 
+# <center>
+# <img src="pictures/VectorisationNN.png">
+# </center>
+# 
+# Then we can computee the output with the activation function : 
+# 
+# <center>
+# <img src="pictures/ActivationNN.png">
 # </center>
 
 # ## 2. Backpropagation : How to find the weights and biais? 
@@ -112,7 +130,7 @@
 
 # <div style="text-align: justify"> 
 # The backpropagation helps us to optimize the parameters of our model. It requires a non-zero gradient almost everywhere, wich forbides us to choose a 0-1 loss function. 
-# The backpropagation help us to compute the gradient more efficiently, but is is not an optimization algorithm. It computes the loss of a gradient based on a batch of data. We do it by computing the gradient recursively. 
+# The backpropagation help us to compute the gradient more efficiently, but is is not an optimization algorithm. It computes the loss of a gradient based on a batch of data. We do it by computing the gradient recursively, as the gradient of the layer l-1 includes a part of the gradient of the layer l. Therefore, by doing it recusively, we can save a lot of computational power. 
 # <div>
 # 
 # Let us consider a neural network with L layers, a vector output and a quadratic cost equal to :
@@ -133,9 +151,9 @@
 # And the four fundamental equations of backpropagation are given by : 
 # <center>
 # 
-# $ \delta^{(L)} = \nabla_a C \otimes \sigma'(z^{(L)}) $ 
+# $ \delta^{(L)} = \nabla_a C \odot \sigma'(z^{(L)}) $ 
 # 
-# $ \delta^{(l)} = ((w^{(l+1)})^T\delta^{(l+1)})\otimes \sigma'(z^{(l)}) $
+# $ \delta^{(l)} = ((w^{(l+1)})^T\delta^{(l+1)})\odot \sigma'(z^{(l)}) $
 # 
 # $\frac{\partial C}{\partial b_j^{(l)}} = \delta_j^{(l)}$
 # 
@@ -173,13 +191,6 @@
 
 # There are a few common activation functions that are regularly used within the neurons. It is important to know how they work, when you should use them and when you should not.
 
-# In[1]:
-
-
-import numpy as np
-import matplotlib.pyplot as plt 
-
-
 # ##### 1. Sigmoid function 
 # 
 # This function is very common in data science. However, it has a few drawbacks : 
@@ -191,7 +202,7 @@ import matplotlib.pyplot as plt
 # y = \frac{e^x}{1+e^x}
 # $$
 
-# In[2]:
+# In[1]:
 
 
 X = np.random.uniform(-5,5,100)
@@ -208,7 +219,7 @@ plt.plot(np.sort(X),np.sort(Y))
 # y = \frac{e^{x} - e^{-x}}{e^{x} + e^{-x}}
 # $$
 
-# In[3]:
+# In[41]:
 
 
 X = np.sort(np.random.uniform(-5,5,100))
@@ -225,7 +236,7 @@ plt.plot(X,Y)
 # Y = \max(0,X)
 # $$
 
-# In[4]:
+# In[42]:
 
 
 X = np.sort(np.random.uniform(-5,5,50))
@@ -241,7 +252,7 @@ plt.plot(X,Y)
 # y = max\left(\alpha \cdot x, x \right) \\ \text{with : } \alpha <1
 # $$
 
-# In[5]:
+# In[43]:
 
 
 X = np.sort(np.random.uniform(-5,5,1000))
@@ -261,11 +272,11 @@ plt.plot(X,Y)
 # \end{array} \right. 
 # $$
 
-# In[6]:
+# In[4]:
 
 
 X = np.sort(np.random.uniform(-5,5,1000))
-alpha = 0.5
+alpha = 0.1
 Y = [x if x >= 0 else alpha*(np.exp(x)-1) for x in X]
 plt.grid()
 plt.plot(X,Y)
@@ -279,7 +290,7 @@ plt.plot(X,Y)
 # y = max\left(\alpha \cdot x, \beta \cdot x,\delta \cdot x \right)
 # $$
 
-# In[7]:
+# In[68]:
 
 
 X = np.sort(np.random.uniform(-5,5,1000))
@@ -300,7 +311,7 @@ plt.plot(X,Y)
 # 
 # 
 
-# In[8]:
+# In[75]:
 
 
 X = np.sort(np.random.uniform(-5,5,1000))

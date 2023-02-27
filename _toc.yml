@@ -14,7 +14,7 @@ parts:
   - caption: Data Manipulation and Data Visualization
     chapters:
     - file: 2. Data visualisation/Data manipulation
-    - file: 2. Data visualisation/Data visualisation
+    - file: 2. Data visualisation/Data visualization
 
   - caption: Supervised Machine Learning
     chapters:
@@ -23,12 +23,13 @@ parts:
 
   - caption: Unsupervised Machine Learning
     chapters:
-    - file: 4. Unsupervised ML/Classification
+    - file: 4. Unsupervised ML/Clustering
 
   - caption: Deep Learning and Optimization
     chapters:
     - file: 5. Deep Learning/1. Introduction to Neural Networks
     - file: 5. Deep Learning/2. Deep Learning Optimization
+    - file: 5. Deep Learning/3. Convolution Neural Networks
 
   - caption: Data Science for Finance
     chapters:

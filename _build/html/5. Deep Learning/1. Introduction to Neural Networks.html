@@ -55,7 +55,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Deep Learning Problems and Optimization" href="2.%20Deep%20Learning%20Optimization.html" />
-    <link rel="prev" title="Classification" href="../4.%20Unsupervised%20ML/Classification.html" />
+    <link rel="prev" title="Dimension Reduction and Clustering" href="../4.%20Unsupervised%20ML/Clustering.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -148,6 +148,11 @@ const thebe_selector_output = ".output, .cell_output"
    Data Manipulation
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2.%20Data%20visualisation/Data%20visualization.html">
+   Data Visualization
+  </a>
+ </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
@@ -173,8 +178,8 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../4.%20Unsupervised%20ML/Classification.html">
-   Classification
+  <a class="reference internal" href="../4.%20Unsupervised%20ML/Clustering.html">
+   Dimension Reduction and Clustering
   </a>
  </li>
 </ul>
@@ -192,6 +197,11 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="2.%20Deep%20Learning%20Optimization.html">
    Deep Learning Problems and Optimization
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="3.%20Convolution%20Neural%20Networks.html">
+   Convolutional Neural Networks
   </a>
  </li>
 </ul>
@@ -417,6 +427,11 @@ title="Print to PDF"
      ADALINE and MADALINE - 1959
     </a>
    </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#strucutre-of-a-neural-network">
+     3. Strucutre of a neural network
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -574,6 +589,11 @@ title="Print to PDF"
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#adaline-and-madaline-1959">
      ADALINE and MADALINE - 1959
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#strucutre-of-a-neural-network">
+     3. Strucutre of a neural network
     </a>
    </li>
   </ul>
@@ -750,11 +770,11 @@ D_n = {(X_i,y_i)_{i \in [1,n]}}
 <p>How do we estimate <span class="math notranslate nohighlight">\(\tilde{w}\)</span> ?</p>
 <ol class="simple">
 <li><p>Start with : <span class="math notranslate nohighlight">\(\tilde{w} = 0\)</span></p></li>
-<li><p>If : <span class="math notranslate nohighlight">\( \hspace{0.2cm} y_i &lt;\tilde{w},\tilde{x_i}&gt;  \hspace{0.2cm} \le 0 \hspace{0.2cm} \implies \hspace{0.2cm} y_i \ne pred(y_i) \)</span>
+<li><p>If : <span class="math notranslate nohighlight">\( \hspace{0.2cm} y_i &lt;\tilde{w},\tilde{x_i}&gt;  \hspace{0.2cm} \le 0 \hspace{0.2cm} \implies \hspace{0.2cm}y_i \ne pred(y_i) \)</span>
 <br> Then : <span class="math notranslate nohighlight">\( \tilde{w} \Leftarrow \tilde{w} + y_i \tilde{x_i}\)</span>
 <br> Else  : <span class="math notranslate nohighlight">\( \tilde{w} \Leftarrow \tilde{w}\)</span></p></li>
 </ol>
-<p>The perceptron algorithm can be seen as a stochastic gradient descent :</p>
+<p>The perceptron algorithm can be seen as a gradient descent :</p>
 <div class="math notranslate nohighlight">
 \[ 
 \tilde{w}_{t+1} \leftarrow \tilde{w}_t - \eta \nabla_w \mathcal{L}(\tilde{w}_t) 
@@ -762,7 +782,7 @@ D_n = {(X_i,y_i)_{i \in [1,n]}}
 <p>With the corresponding loss function :</p>
 <div class="math notranslate nohighlight">
 \[ 
-\mathcal{L}(\tilde{w}_t) = -\sum_{i \in [1,n]}y_i &lt;\tilde{w},\tilde{x_i}&gt; 
+\mathcal{L}(\tilde{w}_t) = -\sum_{i \in [1,n]}1_{y_i &lt;\tilde{w},\tilde{x_i}&gt; &lt; 0}
 \]</div>
 <p>The theorem of Block and Novikoff in 1963 showed that if the data set is linearly separable, then the number of update k of the perceptron is bounded by : <span class="math notranslate nohighlight">\( k+1 \le \frac{1 + R^2}{\gamma^2} \)</span>, with <span class="math notranslate nohighlight">\( \gamma = \min{y_i &lt;\tilde{w^*},\tilde{x_i}&gt;} \)</span></p>
 <div style="text-align: justify">
@@ -775,6 +795,20 @@ Those two algorithms aimed to solve real world problems, with non linearly separ
 </div>
 <center>
 <img src="pictures/Adaline.png">
+</center>
+</section>
+<section id="strucutre-of-a-neural-network">
+<h3>3. Strucutre of a neural network<a class="headerlink" href="#strucutre-of-a-neural-network" title="Permalink to this headline">#</a></h3>
+<center>
+<img src="pictures/Structure_neural_network.png">
+</center>
+<p>In practice we don’t use the raw equations, instead we use vectorization to represent the functions of the layers.</p>
+<center>
+<img src="pictures/VectorisationNN.png">
+</center>
+<p>Then we can computee the output with the activation function :</p>
+<center>
+<img src="pictures/ActivationNN.png">
 </center></section>
 </section>
 <section id="backpropagation-how-to-find-the-weights-and-biais">
@@ -796,7 +830,7 @@ Those two algorithms aimed to solve real world problems, with non linearly separ
 <h3>What is backpropagation ?<a class="headerlink" href="#what-is-backpropagation" title="Permalink to this headline">#</a></h3>
 <div style="text-align: justify"> 
 The backpropagation helps us to optimize the parameters of our model. It requires a non-zero gradient almost everywhere, wich forbides us to choose a 0-1 loss function. 
-The backpropagation help us to compute the gradient more efficiently, but is is not an optimization algorithm. It computes the loss of a gradient based on a batch of data. We do it by computing the gradient recursively. 
+The backpropagation help us to compute the gradient more efficiently, but is is not an optimization algorithm. It computes the loss of a gradient based on a batch of data. We do it by computing the gradient recursively, as the gradient of the layer l-1 includes a part of the gradient of the layer l. Therefore, by doing it recusively, we can save a lot of computational power. 
 <div>
 <p>Let us consider a neural network with L layers, a vector output and a quadratic cost equal to :</p>
 <center>
@@ -808,8 +842,8 @@ The backpropagation help us to compute the gradient more efficiently, but is is 
 </center>
 <p>And the four fundamental equations of backpropagation are given by :</p>
 <center>
-<p><span class="math notranslate nohighlight">\( \delta^{(L)} = \nabla_a C \otimes \sigma'(z^{(L)}) \)</span></p>
-<p><span class="math notranslate nohighlight">\( \delta^{(l)} = ((w^{(l+1)})^T\delta^{(l+1)})\otimes \sigma'(z^{(l)}) \)</span></p>
+<p><span class="math notranslate nohighlight">\( \delta^{(L)} = \nabla_a C \odot \sigma'(z^{(L)}) \)</span></p>
+<p><span class="math notranslate nohighlight">\( \delta^{(l)} = ((w^{(l+1)})^T\delta^{(l+1)})\odot \sigma'(z^{(l)}) \)</span></p>
 <p><span class="math notranslate nohighlight">\(\frac{\partial C}{\partial b_j^{(l)}} = \delta_j^{(l)}\)</span></p>
 <p><span class="math notranslate nohighlight">\(\frac{\partial C}{\partial w_{j,k}^{(l)}} = a_k^{(l-1)} \delta_j^{(l)}\)</span></p>
 </center>
@@ -838,14 +872,6 @@ We then proceed to train the neural network in 4 steps :
 <section id="main-activation-functions">
 <h3>Main activation functions<a class="headerlink" href="#main-activation-functions" title="Permalink to this headline">#</a></h3>
 <p>There are a few common activation functions that are regularly used within the neurons. It is important to know how they work, when you should use them and when you should not.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
-import matplotlib.pyplot as plt 
-</pre></div>
-</div>
-</div>
-</div>
 <section id="sigmoid-function">
 <h4>1. Sigmoid function<a class="headerlink" href="#sigmoid-function" title="Permalink to this headline">#</a></h4>
 <p>This function is very common in data science. However, it has a few drawbacks :</p>
@@ -868,10 +894,16 @@ plt.plot(np.sort(X),np.sort(Y))
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x1365f8280&gt;]
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+
+<span class="ne">NameError</span>: name &#39;np&#39; is not defined
 </pre></div>
 </div>
-<img alt="../_images/1. Introduction to Neural Networks_19_1.png" src="../_images/1. Introduction to Neural Networks_19_1.png" />
 </div>
 </div>
 </section>
@@ -892,10 +924,10 @@ plt.plot(X,Y)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x136a00820&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x115922fb0&gt;]
 </pre></div>
 </div>
-<img alt="../_images/1. Introduction to Neural Networks_21_1.png" src="../_images/1. Introduction to Neural Networks_21_1.png" />
+<img alt="../_images/1. Introduction to Neural Networks_20_1.png" src="../_images/1. Introduction to Neural Networks_20_1.png" />
 </div>
 </div>
 </section>
@@ -916,10 +948,10 @@ plt.plot(X,Y)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x136a6b400&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x1159a2f50&gt;]
 </pre></div>
 </div>
-<img alt="../_images/1. Introduction to Neural Networks_23_1.png" src="../_images/1. Introduction to Neural Networks_23_1.png" />
+<img alt="../_images/1. Introduction to Neural Networks_22_1.png" src="../_images/1. Introduction to Neural Networks_22_1.png" />
 </div>
 </div>
 </section>
@@ -941,10 +973,10 @@ plt.plot(X,Y)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x136b000a0&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x115a1d780&gt;]
 </pre></div>
 </div>
-<img alt="../_images/1. Introduction to Neural Networks_25_1.png" src="../_images/1. Introduction to Neural Networks_25_1.png" />
+<img alt="../_images/1. Introduction to Neural Networks_24_1.png" src="../_images/1. Introduction to Neural Networks_24_1.png" />
 </div>
 </div>
 </section>
@@ -961,7 +993,7 @@ x &amp; \text{if } x \geq 0 \\
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>X = np.sort(np.random.uniform(-5,5,1000))
-alpha = 0.5
+alpha = 0.1
 Y = [x if x &gt;= 0 else alpha*(np.exp(x)-1) for x in X]
 plt.grid()
 plt.plot(X,Y)
@@ -969,10 +1001,10 @@ plt.plot(X,Y)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x136b71240&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x10cb2de40&gt;]
 </pre></div>
 </div>
-<img alt="../_images/1. Introduction to Neural Networks_27_1.png" src="../_images/1. Introduction to Neural Networks_27_1.png" />
+<img alt="../_images/1. Introduction to Neural Networks_26_1.png" src="../_images/1. Introduction to Neural Networks_26_1.png" />
 </div>
 </div>
 </section>
@@ -996,10 +1028,10 @@ plt.plot(X,Y)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x136bd9990&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x11653a950&gt;]
 </pre></div>
 </div>
-<img alt="../_images/1. Introduction to Neural Networks_29_1.png" src="../_images/1. Introduction to Neural Networks_29_1.png" />
+<img alt="../_images/1. Introduction to Neural Networks_28_1.png" src="../_images/1. Introduction to Neural Networks_28_1.png" />
 </div>
 </div>
 </section>
@@ -1025,10 +1057,10 @@ plt.plot(X,Y3)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x136c479a0&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x1364e0fd0&gt;]
 </pre></div>
 </div>
-<img alt="../_images/1. Introduction to Neural Networks_31_1.png" src="../_images/1. Introduction to Neural Networks_31_1.png" />
+<img alt="../_images/1. Introduction to Neural Networks_30_1.png" src="../_images/1. Introduction to Neural Networks_30_1.png" />
 </div>
 </div>
 <p>A rule of thumb consists in using ReLU at first, then Swish, and to avoid sigmoid functions.</p>
@@ -1184,11 +1216,11 @@ Now, we will see how to use thoses notions in order to create a functionning neu
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="../4.%20Unsupervised%20ML/Classification.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="../4.%20Unsupervised%20ML/Clustering.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Classification</p>
+            <p class="prev-next-title">Dimension Reduction and Clustering</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="2.%20Deep%20Learning%20Optimization.html" title="next page">
