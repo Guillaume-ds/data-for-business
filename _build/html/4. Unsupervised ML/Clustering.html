@@ -426,6 +426,13 @@ title="Print to PDF"
     <a class="reference internal nav-link" href="#generalisation-in-more-dimensions">
      Generalisation in more dimensions
     </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#sources-and-other-documentation">
+       Sources and other documentation
+      </a>
+     </li>
+    </ul>
    </li>
   </ul>
  </li>
@@ -477,6 +484,13 @@ title="Print to PDF"
     <a class="reference internal nav-link" href="#generalisation-in-more-dimensions">
      Generalisation in more dimensions
     </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#sources-and-other-documentation">
+       Sources and other documentation
+      </a>
+     </li>
+    </ul>
    </li>
   </ul>
  </li>
@@ -502,14 +516,14 @@ title="Print to PDF"
 <h2>What is unsupervised machine learning ?<a class="headerlink" href="#what-is-unsupervised-machine-learning" title="Permalink to this headline">#</a></h2>
 <p>Unsupervised machine learning consists in working with unlabeled data, often in order to create clusters or groups of observations sharing similar features. For instance, creating a customer segmentation is an unsupervised learning task. It differs from a supervised learning task such as classification in the sense that the segments are not given, i.e. the algorithm has to <em>create</em> the segments in order to classify the customers. Contrary to supervised learning, the dataset is only composed of observations, and does not have target features :</p>
 <ul class="simple">
-<li><p>Dataset in the case of supervised machine learning : <span class="math notranslate nohighlight">\( \mathcal{D} = \{(X_1,Y_1), ... ,(X_n,Y_n) \} \in \mathcal{X}^n, \mathcal{Y}^n \)</span></p></li>
-<li><p>Dataset in the case of unsupervised machine learning : <span class="math notranslate nohighlight">\( \mathcal{D} = \{X_1, ... ,X_n \} \in \mathcal{X}^n \)</span></p></li>
+<li><p>Dataset in the case of <em>supervised</em> machine learning : <span class="math notranslate nohighlight">\( \mathcal{D} = \{(X_1,Y_1), ... ,(X_n,Y_n) \} \in \mathcal{X}^n, \mathcal{Y}^n \)</span></p></li>
+<li><p>Dataset in the case of <em>unsupervised</em> machine learning : <span class="math notranslate nohighlight">\( \mathcal{D} = \{X_1, ... ,X_n \} \in \mathcal{X}^n \)</span></p></li>
 </ul>
-<p>Letting the machine create the segments will allow the user to discover hidden patterns and insights that are often quite complex to detect, especially with a large number of features. For example, it can be relatively easy to find similar behaviour for customers that are the same age, but the task gets harder as we increase the number of feature, and comparing the behaviour of customers with respect to their age, location, average purchases, day of the week … can be way harder. Unsupervised machine learning alogrithm aim at finding a solution for such tasks.</p>
+<p>Letting the machine create the segments will allow the user to discover hidden patterns and insights that are often quite complex to detect, especially with a large number of features. For example, it can be relatively easy to find similar behaviour for customers that are the same age, but the task gets harder as we increase the number of features, and comparing the behaviour of customers with respect to their age, location, average purchases, day of the week … can be way harder. Unsupervised machine learning alogrithms aim at finding a solution for such tasks.</p>
 </section>
 <section id="dimension-reduction">
 <h2>Dimension reduction<a class="headerlink" href="#dimension-reduction" title="Permalink to this headline">#</a></h2>
-<p>The dimension of <span class="math notranslate nohighlight">\( \mathcal{X} \)</span> often makes it hard to work with. Therefore, one the first task to take care of in unsupervised machine learning is to reduce the dimension of the space under study. This can be done with a map <span class="math notranslate nohighlight">\( \phi \)</span> from <span class="math notranslate nohighlight">\( \mathcal{X} \)</span> to a new space <span class="math notranslate nohighlight">\( \mathcal{X}' \)</span> of smaller dimension, i.e. a function that will transform the elements of <span class="math notranslate nohighlight">\( \mathcal{X} \)</span> into elements of <span class="math notranslate nohighlight">\( \mathcal{X}' \)</span>. It is important in this process to take a close look at the reconstruction error of the application <span class="math notranslate nohighlight">\( \tilde{\phi} \)</span> from <span class="math notranslate nohighlight">\( \mathcal{X}' \)</span> to <span class="math notranslate nohighlight">\( \mathcal{X} \)</span> : <span class="math notranslate nohighlight">\( \tilde{\phi}(\phi(\mathcal{X})) \)</span> should be equal to <span class="math notranslate nohighlight">\( \mathcal{X} \)</span>. The relationship between observations must also be preserved : <span class="math notranslate nohighlight">\((\phi(X_i),\phi(X_j))\)</span> should have a similar relationship as <span class="math notranslate nohighlight">\( (X_i,X_j)\)</span>.</p>
+<p>The dimension of <span class="math notranslate nohighlight">\( \mathcal{X} \)</span> often makes it hard to work with. Therefore, one the first task to take care of in unsupervised machine learning is to reduce the dimension of the space under study. This can be done with a map <span class="math notranslate nohighlight">\( \phi \)</span> from <span class="math notranslate nohighlight">\( \mathcal{X} \)</span> to a new space <span class="math notranslate nohighlight">\( \mathcal{X}' \)</span> of smaller dimension, i.e. a function that will transform the elements of <span class="math notranslate nohighlight">\( \mathcal{X} \)</span> into elements of <span class="math notranslate nohighlight">\( \mathcal{X}' \)</span>. It is important in this process to take a close look at the reconstruction error of the application <span class="math notranslate nohighlight">\( \tilde{\phi} \)</span> : <span class="math notranslate nohighlight">\( \mathcal{X}' \rightarrow \mathcal{X} \)</span>, so that <span class="math notranslate nohighlight">\( \tilde{\phi}(\phi(\mathcal{X})) \)</span> is equal to <span class="math notranslate nohighlight">\( \mathcal{X} \)</span>. The relationship between observations must also be preserved : <span class="math notranslate nohighlight">\((\phi(X_i),\phi(X_j))\)</span> should have a similar relationship as <span class="math notranslate nohighlight">\( (X_i,X_j)\)</span>.</p>
 <p>The formalised motivation behind the reduction of the dimension of the space is the <strong>hight dimensional geometry curse - Folks theorem</strong>, which states that <em>when <span class="math notranslate nohighlight">\(d\)</span> is large enough, all points are almost equidistant</em>.</p>
 <ul class="simple">
 <li><p>If <span class="math notranslate nohighlight">\(X_1,...,X_n\)</span> in the hypercube of dimension <span class="math notranslate nohighlight">\(d\)</span> such that their coordinates are i.i.d then :</p></li>
@@ -524,11 +538,11 @@ title="Print to PDF"
 <img src="./pictures/resized_dataset.png" width="500" height="250">
 </figure>
 </center>
-<p>However, reducing the size of the space leads to a loss of information. Indeed, each dimension corresponds to a feature, thus a space of dimension <span class="math notranslate nohighlight">\(k \le d\)</span> will include <span class="math notranslate nohighlight">\(d-k\)</span> less features.  Therefore, it is necessary to carefully select the dimensions to be removed in ordeer to preserve the principal components.</p>
+<p>However, reducing the size of the space leads to a loss of information. Indeed, each dimension corresponds to a feature, thus a space of dimension <span class="math notranslate nohighlight">\(k \le d\)</span> will include <span class="math notranslate nohighlight">\(d-k\)</span> less features.  Therefore, it is necessary to carefully select the dimensions to be removed in order to preserve the principal components.</p>
 </section>
 <section id="principal-component-analysis">
 <h2>Principal Component Analysis<a class="headerlink" href="#principal-component-analysis" title="Permalink to this headline">#</a></h2>
-<p>As the name suggests, the objective of principal component analysis is to select the most important features in order to create a subspace of smaller dimension that retains the most information, it aims at decreasing the dimension of the dataset from <span class="math notranslate nohighlight">\(d\)</span> to <span class="math notranslate nohighlight">\(k\)</span> with <span class="math notranslate nohighlight">\( d \ge k\)</span>, while capturing the essence of the original data. We consider the dispertion of the data with respect to a feature as the importance of this feature, i.e the more dispersed the data is with respect to a feature, the more useful this feature will be in order to create clusters.</p>
+<p>As the name suggests, the objective of principal component analysis is to select the most important features in order to <strong>create a subspace of smaller dimension that retains the most information</strong>. It aims at decreasing the dimension of the dataset from <span class="math notranslate nohighlight">\(d\)</span> to <span class="math notranslate nohighlight">\(k\)</span> with <span class="math notranslate nohighlight">\( d \ge k\)</span>, while capturing the essence of the original data. We consider the dispertion of the data with respect to a feature as the importance of this feature, i.e the more dispersed the data is with respect to a feature, the more useful this feature will be in order to create clusters.</p>
 <section id="first-example-in-2-dimensions">
 <h3>First example in 2 dimensions<a class="headerlink" href="#first-example-in-2-dimensions" title="Permalink to this headline">#</a></h3>
 <center>
@@ -537,10 +551,10 @@ title="Print to PDF"
         <figcaption>Fig.1 - PCA example from wikipedia with the transformation to apply</figcaption>
     </figure>
 </center>
-<p>On the example above, we can clearly see that the feature represented on the X-axis is the principal component, whereas the one on the Y-axis is less important. Indeed, the variation is greater on the X-axis as it is on the Y-axis. The objective will be to rotate the data as shown in red in order to increase the variance with respect to the X axis, and decrease the variance with respect to the Y axis. A little bit of mathematical formalization is necessary in order to clearly understand how one can compute the importance and the dispersion of each feature.</p>
+<p>On the example above, we can clearly see that the feature represented on the X-axis is the most important feature, whereas the one on the Y-axis is less important. Indeed, the variation is greater on the X-axis as it is on the Y-axis. The objective will be to rotate the data as shown in red in order to increase the variance with respect to the X axis, and decrease the variance with respect to the Y axis. As a result, it will create a new space where both axis are independent linear combinations of X and Y (see below). A little bit of mathematical formalization is necessary in order to clearly understand how one can compute the importance and the dispersion of each feature.</p>
 <ol class="simple">
 <li><p><strong>Find the center of the dataset</strong>. We can see on the graph above that the origin of the 2 vectors is at the center of the dataset. This point can be found by computing the mean of each feature, here we see that the mean of the data on the X axis is 1, and that the mean on the Y axis is 3. Therefore, the center of the dataset is the point (1,3). Then when move the data set so that its center is on the origin. This operation does not change the dataset, we only “move” the axis so that the origin is on the mean.</p></li>
-<li><p><strong>Find the direction of the main vector</strong>. The data above has a nice shape that makes quite obvious the direction in which the main vector should be. However, it is still necessary to compute the precise direction. This can be done by fitting a line through the dataset, the same way than for a linear regression problem, either by minimizing the square distances between the line and the points (<span class="math notranslate nohighlight">\(d_i\)</span>) or by maximizing the square distances between the projection of the point on the line (<span class="math notranslate nohighlight">\(d*_i\)</span>) and the origin. The equivalent holds because of the pytagorian theorem : since : <span class="math notranslate nohighlight">\(b^2_i = d_i^2 + d_i^{*2}\)</span>, then : <span class="math notranslate nohighlight">\(min(\sum_{i=1}^d d_i^2) \equiv max(\sum_{i=1}^d d^{*2}_i)\)</span>. When can have this intuition by looking at the line : as the line gets closer to the data point <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(d_i\)</span> decreases and <span class="math notranslate nohighlight">\(d*_i\)</span> increases as it gets closer to its hypothenuse.</p></li>
+<li><p><strong>Find the direction of the main vector</strong>. The data above has a nice shape that makes quite obvious the direction in which the main vector should be. However, it is still necessary to compute the precise direction. This can be done by fitting a line through the dataset, the same way than for a linear regression problem, either by minimizing the square distances between the line and the points (<span class="math notranslate nohighlight">\(d_i\)</span>) or by maximizing the square distances between the projection of the point on the line (<span class="math notranslate nohighlight">\(d*_i\)</span>) and the origin. The equivalent holds because of the pytagorian theorem : since : <span class="math notranslate nohighlight">\(b^2_i = d_i^2 + d_i^{*2}\)</span>, then : <span class="math notranslate nohighlight">\(min(\sum_{i=1}^d d_i^2) \equiv max(\sum_{i=1}^d d^{*2}_i)\)</span>. We can have this intuition by looking at the line : as the line gets closer to the data point <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(d_i\)</span> decreases and <span class="math notranslate nohighlight">\(d*_i\)</span> increases as it gets closer to its hypothenuse.</p></li>
 </ol>
 <center>
     <figure>
@@ -548,8 +562,8 @@ title="Print to PDF"
         <figcaption>Fig.2 - Line fitting through the dataset</figcaption>
     </figure>
 </center>
-<p>Then, we can find the best fitting line by solving one of the two optimisation problem above. Here, the fitting line as a slope of 1/3, i.e. for each variation of 3 on the X axis, there is only a variation of 1 on the Y axis. This means that the feature X is 3 times more important than Y for the PC 1, and thus the PC1 can be seen as the result of a linear combination such as : 3.X + Y. Indeed, in principal component analysis, we replace the features by a linear combination of the features. Therefore, a data point will not depend on <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span>, but on two linear combination of both.</p>
-<p>Now that we have the the direction of the fitting line, we need to find the unit vector, i.e. the vector that corresponds to moving of one unit on the fitting line. Note that this unit vector corresponds to the eingenvector. We start from the vector above <span class="math notranslate nohighlight">\((3,1)\)</span> that we will scale to a length of 1 by using the pytagorian theorem. Obviously, the lienar relation between X and Y remains, as : <span class="math notranslate nohighlight">\(3 \times \frac{1}{\sqrt{10}} = \frac{3}{\sqrt{10}}\)</span>. This means that for the principal component 1, that we see on the figure below, the feature X is 3 times as important as the feature Y.</p>
+<p>Then, we can find the best fitting line by solving one of the two optimisation problems above. Mathematically, we can achieve this by computing the products of the data points and the vector <span class="math notranslate nohighlight">\(u\)</span> that defines the fitting line : <span class="math notranslate nohighlight">\(max(\sum_{i=1}^d (x_i^Tu)^2) \)</span> Here, the fitting line has a slope of 1/3, i.e. for each variation of 3 on the X axis, there is only a variation of 1 on the Y axis. This means that the feature X is 3 times more important than Y for the PC1, and thus the PC1 can be seen as the result of a <strong>linear combination such as : 3.X + Y</strong> . Indeed, in principal component analysis, we replace the features by a linear combination of the features. Therefore, a data point will not depend on <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> alone, but on two linear combination of both.</p>
+<p>Now that we have the the direction of the fitting line, we need to find the unit vector, i.e. the vector that corresponds to moving of one unit on the fitting line. Note that this unit vector corresponds to the eingenvector. We start from the vector above <span class="math notranslate nohighlight">\((3,1)\)</span> that we will scale to a length of 1 by using the pytagorian theorem. Obviously, the lienar relation between X and Y remains, as : <span class="math notranslate nohighlight">\(3 \times \frac{1}{\sqrt{10}} = \frac{3}{\sqrt{10}}\)</span>. This means that for the principal component 1, that we see on the figure below, the feature X is 3 times as important as the feature Y, and that PC1 depends on both X and Y.</p>
 <div class="math notranslate nohighlight">
 \[
 length_{vectorA}^2 = 3^2 + 1^2 \iff length_{vectorA} = \sqrt{10}
@@ -569,38 +583,91 @@ PC1\ unit\ vector = (\frac{3}{\sqrt{10}},\frac{1}{\sqrt{10}})
 \[
 PC2\ unit\ vector = (\frac{-1}{\sqrt{10}},\frac{3}{\sqrt{10}})
 \]</div>
-<p>Once we have the two unit vectors and therefore the two PC, we can project the data set onto this new space. Then we rotate the new space and we obtain a new representation of the dataset that extends the most important feature. We can see that the relation between the points remains the same as on fig.2, however the variance increased on the X axis and decreased on the Y axis.</p>
+<p>Once we have the two unit vectors and therefore the two PC, we can project the data set onto this new space. Then we rotate the new space and we obtain a new representation of the dataset that extends the most important feature. We can see that the relation between the points remains the same as on fig.2, however the variance increased on the X axis and decreased on the Y axis. The points are now represented as a function of PC1 and PC2, both of which are independent linear combinations of X and Y.</p>
 <div style="display:flex;justify-content:space-around">
-    <img src="./pictures/PCA_projection.png" width="450" height="300">
-    <img src="./pictures/PCA_newspace.png" width="450" height="300" style="transform:rotate(-4deg);">
+    <img src="./pictures/PCA_projection.png" width="350" height="250">
+    <img src="./pictures/PCA_newspace.png" width="350" height="250" style="transform:rotate(-4deg);">
 </div>
-<p>We can see that the points are now represented as a function of PC1 and PC2, both of which are linear combinations of X and Y. Finally, we can compute the importance of each feature in the total variation of the PCs. First, we compute the sum of square distances of the projections of the points relatively to the origin divided by (n-1). For PC1 it is the sum of square distances between each green cross and the origin devided by 9 (there are 10 data points), and for PC2 we do the same with the blue crosses. Let’s say for the sake of the example that the variation for PC1 is equal to 15, and that it is equal to 5 for PC2. Then the total variation is equal to 20, and PC1 accounts for 15/20 = 75% of the variation, and PC2 accounts for 25% of the variation.</p>
+<br>
+Finally, we can compute the importance of each feature in the total variation of the PCs. First, we compute the sum of square distances of the projections of the points relatively to the origin divided by (n-1). For PC1 it is the sum of square distances between each green cross and the origin devided by 9 (there are 10 data points), and for PC2 we do the same with the blue crosses. Let's say for the sake of the example that the variation for PC1 is equal to 15, and that it is equal to 5 for PC2. Then the total variation is equal to 20, and PC1 accounts for 15/20 = 75% of the variation, and PC2 accounts for 25% of the variation. 
 </section>
 <section id="generalisation-in-more-dimensions">
 <h3>Generalisation in more dimensions<a class="headerlink" href="#generalisation-in-more-dimensions" title="Permalink to this headline">#</a></h3>
-<p>In a real life scenario where there are many more features and dimensions, it is impossible to proceed by representing the dataset in the entire space. Indeed, even the simple example above of a customer dataset is in 5 dimensions, and thus impossible to represent graphically. In order to classify the importance of each component, it is necessary to adopt a mathematical approach and to compute the covariance matrix. The covariance matrix, called <span class="math notranslate nohighlight">\(\Sigma\)</span>, is a matrix where the element <span class="math notranslate nohighlight">\((i,j)\)</span> corresponds to the covariance of the features <span class="math notranslate nohighlight">\(X_i,X_j\)</span>. Note : the covariance of <span class="math notranslate nohighlight">\(X_i,X_i\)</span> is equal to the variance of <span class="math notranslate nohighlight">\(X_i\)</span>, therefore the diagonal of the covariance matrix is composed of the variance of each feature.</p>
+<p>In a real life scenario where there are many more features and dimensions, it is impossible to proceed by representing the dataset in the entire space. Indeed, even the simple example above of a customer dataset is in 5 dimensions, and thus impossible to represent graphically. In order to do a PCA and classify the importance of each component, it is necessary to adopt a mathematical approach and to compute the <strong>covariance matrix</strong>. The covariance matrix, called <span class="math notranslate nohighlight">\(\Sigma\)</span>, is a matrix where the element <span class="math notranslate nohighlight">\((i,j)\)</span> corresponds to the covariance of the features <span class="math notranslate nohighlight">\(X_i,X_j\)</span>. Note : the covariance of <span class="math notranslate nohighlight">\(X_i,X_i\)</span> is equal to the variance of <span class="math notranslate nohighlight">\(X_i\)</span>, therefore the diagonal of the covariance matrix is composed of the variance of each feature.</p>
 <div class="math notranslate nohighlight">
 \[
 cov(X_i,X_j) = E[(X_i - \mu_i)(X_j - \mu_j)] 
 \]</div>
 <div style="text-align:center">
-<p>with <span class="math notranslate nohighlight">\(\mu_i\)</span>, <span class="math notranslate nohighlight">\(\mu_j\)</span> the expected values of the <span class="math notranslate nohighlight">\(i^{th}\)</span> and <span class="math notranslate nohighlight">\(j^{th}\)</span> features.</p>
+<p><em><small>with <span class="math notranslate nohighlight">\(\mu_i\)</span>, <span class="math notranslate nohighlight">\(\mu_j\)</span> the expected values of the <span class="math notranslate nohighlight">\(i^{th}\)</span> and <span class="math notranslate nohighlight">\(j^{th}\)</span> features.</small></em></p>
 </div>
 <div class="math notranslate nohighlight">
-\[
-\Sigma = E[(\boldsymbol{X}−E[\boldsymbol{X}])(\boldsymbol{X}−E[\boldsymbol{X}])^T]
-\]</div>
+\[\begin{split}
+\begin{align}
+\Sigma 
+&amp; = E[(\boldsymbol{X}−E[\boldsymbol{X}])(\boldsymbol{X}−E[\boldsymbol{X}])^T] \\
+&amp; = \frac{1}{n} \sum_i x_ix_i^T
+\end{align}
+\end{split}\]</div>
 <div style="text-align:center">
-<p>with <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span> the matrix of observations.</p>
+<p><em><small>with <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span> the matrix of observations.</small></em></p>
 </div>
-<p>In order to do a PCA, we start by computing the covariance matrix, and then we compute the corresponding eingenvectors and eigenvalues. Because the features are supposed to be linearly independent, we should find the same number of eingenvectors and eingenvalues as features. We classify the eigenvalues in an increasing order and select the k-biggest (the data scientist gets to choose k!). Finally we project the dataset onto the newly formed space of size k.</p>
+<p>Once we computed the covariance matrix, we can find the <strong>corresponding eingenvectors and eigenvalues</strong>. Remember that <span class="math notranslate nohighlight">\(\lambda\)</span> is said to be an <strong>eigenvalue of</strong> <span class="math notranslate nohighlight">\(\Sigma\)</span> if:</p>
+<div class="math notranslate nohighlight">
+\[\boldsymbol{\Sigma - \lambda I = 0 \Rightarrow \Sigma u = \lambda u}\]</div>
+<p>Because the features are supposed to be linearly independent, we should find the same number of eingenvectors and eingenvalues as features. Mathematically, we can show that finding : <span class="math notranslate nohighlight">\( max(\sum_{i=1}^d (x_i^Tu)^2) \text{, with : }u^Tu = 1 \)</span> corresponds to finding the matrix of eingenvectors. Recall that it is by solving this optimization problem that we find the fitting line. We can find the solution to this maximisation problem by using the Lagrange function <span class="math notranslate nohighlight">\(L\)</span> and its derivative with respect to <span class="math notranslate nohighlight">\(u\)</span> in order to find the directions that preserves the most information after the projection, and then find <span class="math notranslate nohighlight">\(\lambda\)</span> and <span class="math notranslate nohighlight">\(u\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+max[\sum_{i=1}^d (x_i^Tu)^2]
+&amp; = max[\sum_{i=1}^d (u^Tx_i)(x_i^Tu)] \\ 
+&amp; = \boldsymbol{max[u^T\Sigma u]} 
+\end{align}
+\end{split}\]</div>
+<div style="text-align:center;margin-top:10px;margin-bottom:30px">
+<em><small>The maximization problem leads to finding the eigenvectors with the Lagrange function :</small></em>
+</div>
+<div class="math notranslate nohighlight">
+\[\begin{split} 
+\begin{align}
+\text{Lagrange function : } &amp; L(u,\lambda) = u^T\Sigma u - \lambda ( u^Tu-1)
+\\
+\text{First derivative : } &amp; \frac{\partial L}{\partial u} = 2 \Sigma u - 2 \lambda u
+\\
+\text{We set : } &amp; 2 \Sigma u - 2 \lambda u = 0 \iff \boldsymbol{ \Sigma u = \lambda u}
+\end{align}
+\end{split}\]</div>
+<div style="text-align:center;margin-top:10px;margin-bottom:30px">
+<em><small>We solve this last equation to find the eigenvalues and eigenvectors:</small></em>
+</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+(\lambda_1, ... ,\lambda_d) \text{ solution of : } &amp; \Sigma - \lambda I = 0
+\\
+\text{Therefore : }&amp; \forall \lambda_i \in (\lambda_1, ... ,\lambda_d), \exists u_i \ \Sigma u_i = \lambda_i u_i
+\\
+(u_1, ... ,u_d) \text{ solution of : } &amp; (\Sigma - \lambda_i I) u_i= 0
+\end{align}
+\end{split}\]</div>
+<p>Now that we have the eingevectors and there associated eigenvalues, we can classify them by their order of importance: the greater the eingenvalue, the more important the eigenvector is. We then select the k-biggest eigenvectors (the data scientist gets to choose k!). Note that by definition, the total variation is given by the sum of the variances. It turns out that this is also equal to the sum of the eigenvalues of the variance-covariance matrix: <span class="math notranslate nohighlight">\(\sum_{i=1}^k \lambda_i\)</span>. As a consequence, it is only by selecting the k-biggest eigenvalues that we get the largest variation possible for the subspace. Finally, we project the dataset onto the newly formed space of size k by multiplying the matrix of eigenvectors with the standardized dataset :</p>
+<div class="math notranslate nohighlight">
+\[
+ProjectedDataSet = FeatureVector^T * StandardizedDataSet
+\]</div>
+<p>In conclusion, we start by looking at the dataset in order to compute the covariance matrix (1). Then we compute the eigenvectors and eigenvalues (2). Finally, we can project the data onto a smaller space (3). Here, the space is in 4 dimensions, which can be represented with the help of a color chart.</p>
 <center>
     <figure>
-        <img src="./pictures/PCA_summary.png" width="600" height="300">
+        <img src="./pictures/PCA_summary.png" >
         <figcaption>Fig.4 - Summary</figcaption>
     </figure>
 </center>
-<p>In conclusion, we start by looking at the dataset in order to compute the covariance matrix. Then we compute the eigenvectors and eigenvalues. Finally, we can project the data onto a smaller space. Here, the space is in 4 dimensions, which can be represented with the help of a color chart.</p>
+<section id="sources-and-other-documentation">
+<h4>Sources and other documentation<a class="headerlink" href="#sources-and-other-documentation" title="Permalink to this headline">#</a></h4>
+<p><a href="https://www.youtube.com/watch?v=FD4DeN81ODY"> PCA by Visually Explained</a><br>
+<a href="https://www.youtube.com/watch?v=_UVHneBUBW0"> PCA by StatQuest</a><br>
+<a href="https://online.stat.psu.edu/stat505/lesson/4/4.5">Eigenvectors and eingevalues explained </a></p>
+</section>
 </section>
 </section>
 <section id="clustering">

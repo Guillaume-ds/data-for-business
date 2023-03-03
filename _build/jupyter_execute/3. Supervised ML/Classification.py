@@ -62,30 +62,26 @@
 # Then, download the data set : https://www.kaggle.com/datasets/altruistdelhite04/loan-prediction-problem-dataset?resource=download) and unzip the file and load it in python with pandas. As the data sets are from an external source, we will check that there are correctly splited.
 # </div>
 
-# In[1]:
+# ```python
+# import pandas as pd 
+# import numpy as np 
+# ```
 
-
-import pandas as pd 
-import numpy as np 
-
-
-# In[2]:
-
-
-train = pd.read_csv("../datasets/loan/train.csv")
-test = pd.read_csv("../datasets/loan/test.csv")
-
-print(list(train.columns))
-print(list(test.columns),"\n")
-
-S1 = set(train["Loan_ID"])
-S2 = set(test["Loan_ID"])
-
-if S1.intersection(S2) != set():
-    print("Error, there are common elements in train and test data sets : ", S1.intersection(S2))
-else:
-    print("Datasets are correctly splited")
-
+# ```python
+# train = pd.read_csv("../datasets/loan/train.csv")
+# test = pd.read_csv("../datasets/loan/test.csv")
+# 
+# print(list(train.columns))
+# print(list(test.columns),"\n")
+# 
+# S1 = set(train["Loan_ID"])
+# S2 = set(test["Loan_ID"])
+# 
+# if S1.intersection(S2) != set():
+#     print("Error, there are common elements in train and test data sets : ", S1.intersection(S2))
+# else:
+#     print("Datasets are correctly splited")
+# ```
 
 # <div style="text-align:justify">
 # Now that the data has been loaded and that we checked that the two datasets are different, we can do data exploration.
@@ -97,7 +93,7 @@ else:
 # We will import two libraries for data visualisation : seaborn and matplotlib are very common library used for data visualization. Other common are ggplot, altair ...
 # </div>
 
-# In[3]:
+# In[1]:
 
 
 import matplotlib.pyplot as plt 
@@ -108,20 +104,20 @@ import seaborn as sns
 # First, let's look at the type of data. We will focuse on the train dataset. Some useful functions are head, info, isnull and describe. We see that Loan_ID is not a relevant field for our problem, therefre we can drop it immediatly. 
 # </div>
 
-# In[4]:
+# In[2]:
 
 
 train.head()
 
 
-# In[5]:
+# In[78]:
 
 
 train.drop('Loan_ID',axis=1,inplace=True)
 train.describe()
 
 
-# In[6]:
+# In[79]:
 
 
 train.isnull().sum()
@@ -138,7 +134,7 @@ train.isnull().sum()
 # For LoanAmount and Credit_History we can either replace the missing values by their means, or drop the entries with missing values. As both of those fields have an important standart deviations in comparison to their mean, it could create a significant noise to replace them by their mean (cf. describe table). Therefore, we will drop the lines with either a missing loan amount or loan amount term. We can do that with the dropna function by specifying the columns in which it should look for NA values. 
 # </div>
 
-# In[7]:
+# In[80]:
 
 
 train = train.dropna(subset=['LoanAmount', 'Credit_History'])
@@ -151,7 +147,7 @@ train[['LoanAmount', 'Credit_History']].isnull().sum()
 # For Loan_Amount_Term we can replace the missing values by the mean of this duration.
 # </div>
 
-# In[8]:
+# In[81]:
 
 
 Mean_Amout_Term = int(train['Loan_Amount_Term'].mean())
@@ -165,7 +161,7 @@ train['Loan_Amount_Term'].fillna(Mean_Amout_Term ,inplace=True)
 # For other fields we can replace the missing values by their mode. This would make sense as their mean is close to this value. 
 # </div>
 
-# In[9]:
+# In[82]:
 
 
 print("The mode of Gender history is : ",train['Self_Employed'].mode()[0]) 
@@ -177,19 +173,19 @@ train['Dependents'].fillna(train['Dependents'].mode()[0],inplace=True)
 
 # Let's recount the missing values now : 
 
-# In[10]:
+# In[83]:
 
 
 train.isnull().sum()
 
 
-# In[11]:
+# In[84]:
 
 
 train.info()
 
 
-# In[12]:
+# In[85]:
 
 
 train.nunique()
@@ -199,13 +195,13 @@ train.nunique()
 # Those results are making sense, except for dependents that is an "object" (see train.info()) when it is supposed to be an integer. As we can see below, values above 3 are regrouped in a unique field "+3" that we can replace by "3" as in order to have only integer. 
 # </div>
 
-# In[13]:
+# In[86]:
 
 
 train['Dependents'].value_counts()
 
 
-# In[14]:
+# In[87]:
 
 
 train['Dependents'].replace('3+',3,inplace=True)
@@ -219,7 +215,7 @@ train['Dependents'].value_counts()
 
 # ##### 1. Outsiders
 
-# In[15]:
+# In[94]:
 
 
 sns.catplot(data=train,kind='box')
@@ -230,7 +226,7 @@ plt.show()
 
 # ##### 2. Correlation
 
-# In[16]:
+# In[95]:
 
 
 plt.figure(figsize=(15,5))
@@ -240,7 +236,7 @@ plt.show()
 
 # ##### 3. Discrete values 
 
-# In[17]:
+# In[106]:
 
 
 Discrete_Values = ['Loan_Status','Gender', 'Married', 'Dependents', 'Education', 'Self_Employed', 'Loan_Amount_Term', 'Credit_History', 'Property_Area']
@@ -256,7 +252,7 @@ plt.show()
 
 # ##### 4. Continous values 
 
-# In[18]:
+# In[111]:
 
 
 Continous_Values = ['ApplicantIncome','CoapplicantIncome', 'LoanAmount', 'Loan_Amount_Term', 'ApplicantIncome']

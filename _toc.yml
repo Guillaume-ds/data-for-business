@@ -23,7 +23,9 @@ parts:
 
   - caption: Unsupervised Machine Learning
     chapters:
-    - file: 4. Unsupervised ML/Clustering
+    - file: 4. Unsupervised ML/1. Dimension Reduction
+    - file: 4. Unsupervised ML/2. Principal Component Analysis
+    - file: 4. Unsupervised ML/3. Clustering
 
   - caption: Deep Learning and Optimization
     chapters:

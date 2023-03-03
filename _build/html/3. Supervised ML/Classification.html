@@ -26,6 +26,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/myfile.css" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -54,7 +55,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Dimension Reduction and Clustering" href="../4.%20Unsupervised%20ML/Clustering.html" />
+    <link rel="next" title="Unsupervised Machine Learning and Dimension Reduction" href="../4.%20Unsupervised%20ML/1.%20Dimension%20Reduction.html" />
     <link rel="prev" title="Regression" href="Regression.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -178,8 +179,18 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../4.%20Unsupervised%20ML/Clustering.html">
-   Dimension Reduction and Clustering
+  <a class="reference internal" href="../4.%20Unsupervised%20ML/1.%20Dimension%20Reduction.html">
+   Unsupervised Machine Learning and Dimension Reduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../4.%20Unsupervised%20ML/2.%20Principal%20Component%20Analysis.html">
+   Principal Component Analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../4.%20Unsupervised%20ML/3.%20Clustering.html">
+   Clustering
   </a>
  </li>
 </ul>
@@ -661,40 +672,24 @@ Pandas and numpy are the main packages used for loading/creating data sets. Howe
 </div>
 <div style="text-align:justify">
 Then, download the data set : https://www.kaggle.com/datasets/altruistdelhite04/loan-prediction-problem-dataset?resource=download) and unzip the file and load it in python with pandas. As the data sets are from an external source, we will check that there are correctly splited.
-</div><div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd 
-import numpy as np 
+</div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span> 
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> 
 </pre></div>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>train = pd.read_csv(&quot;../datasets/loan/train.csv&quot;)
-test = pd.read_csv(&quot;../datasets/loan/test.csv&quot;)
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/loan/train.csv&quot;</span><span class="p">)</span>
+<span class="n">test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/loan/test.csv&quot;</span><span class="p">)</span>
 
-print(list(train.columns))
-print(list(test.columns),&quot;\n&quot;)
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">train</span><span class="o">.</span><span class="n">columns</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">test</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
-S1 = set(train[&quot;Loan_ID&quot;])
-S2 = set(test[&quot;Loan_ID&quot;])
+<span class="n">S1</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s2">&quot;Loan_ID&quot;</span><span class="p">])</span>
+<span class="n">S2</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="s2">&quot;Loan_ID&quot;</span><span class="p">])</span>
 
-if S1.intersection(S2) != set():
-    print(&quot;Error, there are common elements in train and test data sets : &quot;, S1.intersection(S2))
-else:
-    print(&quot;Datasets are correctly splited&quot;)
+<span class="k">if</span> <span class="n">S1</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">S2</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">set</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error, there are common elements in train and test data sets : &quot;</span><span class="p">,</span> <span class="n">S1</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">S2</span><span class="p">))</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Datasets are correctly splited&quot;</span><span class="p">)</span>
 </pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;Loan_ID&#39;, &#39;Gender&#39;, &#39;Married&#39;, &#39;Dependents&#39;, &#39;Education&#39;, &#39;Self_Employed&#39;, &#39;ApplicantIncome&#39;, &#39;CoapplicantIncome&#39;, &#39;LoanAmount&#39;, &#39;Loan_Amount_Term&#39;, &#39;Credit_History&#39;, &#39;Property_Area&#39;, &#39;Loan_Status&#39;]
-[&#39;Loan_ID&#39;, &#39;Gender&#39;, &#39;Married&#39;, &#39;Dependents&#39;, &#39;Education&#39;, &#39;Self_Employed&#39;, &#39;ApplicantIncome&#39;, &#39;CoapplicantIncome&#39;, &#39;LoanAmount&#39;, &#39;Loan_Amount_Term&#39;, &#39;Credit_History&#39;, &#39;Property_Area&#39;] 
-
-Datasets are correctly splited
-</pre></div>
-</div>
-</div>
 </div>
 <div style="text-align:justify">
 Now that the data has been loaded and that we checked that the two datasets are different, we can do data exploration.
@@ -720,123 +715,15 @@ First, let's look at the type of data. We will focuse on the train dataset. Some
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">train</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Loan_ID</th>
-      <th>Gender</th>
-      <th>Married</th>
-      <th>Dependents</th>
-      <th>Education</th>
-      <th>Self_Employed</th>
-      <th>ApplicantIncome</th>
-      <th>CoapplicantIncome</th>
-      <th>LoanAmount</th>
-      <th>Loan_Amount_Term</th>
-      <th>Credit_History</th>
-      <th>Property_Area</th>
-      <th>Loan_Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>LP001002</td>
-      <td>Male</td>
-      <td>No</td>
-      <td>0</td>
-      <td>Graduate</td>
-      <td>No</td>
-      <td>5849</td>
-      <td>0.0</td>
-      <td>NaN</td>
-      <td>360.0</td>
-      <td>1.0</td>
-      <td>Urban</td>
-      <td>Y</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>LP001003</td>
-      <td>Male</td>
-      <td>Yes</td>
-      <td>1</td>
-      <td>Graduate</td>
-      <td>No</td>
-      <td>4583</td>
-      <td>1508.0</td>
-      <td>128.0</td>
-      <td>360.0</td>
-      <td>1.0</td>
-      <td>Rural</td>
-      <td>N</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>LP001005</td>
-      <td>Male</td>
-      <td>Yes</td>
-      <td>0</td>
-      <td>Graduate</td>
-      <td>Yes</td>
-      <td>3000</td>
-      <td>0.0</td>
-      <td>66.0</td>
-      <td>360.0</td>
-      <td>1.0</td>
-      <td>Urban</td>
-      <td>Y</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>LP001006</td>
-      <td>Male</td>
-      <td>Yes</td>
-      <td>0</td>
-      <td>Not Graduate</td>
-      <td>No</td>
-      <td>2583</td>
-      <td>2358.0</td>
-      <td>120.0</td>
-      <td>360.0</td>
-      <td>1.0</td>
-      <td>Urban</td>
-      <td>Y</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>LP001008</td>
-      <td>Male</td>
-      <td>No</td>
-      <td>0</td>
-      <td>Graduate</td>
-      <td>No</td>
-      <td>6000</td>
-      <td>0.0</td>
-      <td>141.0</td>
-      <td>360.0</td>
-      <td>1.0</td>
-      <td>Urban</td>
-      <td>Y</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
+<span class="ne">NameError</span>: name &#39;train&#39; is not defined
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1171,7 +1058,7 @@ plt.show()
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/5w/k34nxpys5nxfvb9s2kv_4kr80000gn/T/ipykernel_50721/1603077357.py:2: FutureWarning: The default value of numeric_only in DataFrame.corr is deprecated. In a future version, it will default to False. Select only valid columns or specify the value of numeric_only to silence this warning.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/5w/k34nxpys5nxfvb9s2kv_4kr80000gn/T/ipykernel_81729/1603077357.py:2: FutureWarning: The default value of numeric_only in DataFrame.corr is deprecated. In a future version, it will default to False. Select only valid columns or specify the value of numeric_only to silence this warning.
   sns.heatmap(train.corr(),annot=True)
 </pre></div>
 </div>
@@ -1274,10 +1161,10 @@ plt.show()
             <p class="prev-next-title">Regression</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="../4.%20Unsupervised%20ML/Clustering.html" title="next page">
+    <a class='right-next' id="next-link" href="../4.%20Unsupervised%20ML/1.%20Dimension%20Reduction.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Dimension Reduction and Clustering</p>
+        <p class="prev-next-title">Unsupervised Machine Learning and Dimension Reduction</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

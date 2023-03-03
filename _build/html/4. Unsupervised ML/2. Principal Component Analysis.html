@@ -1,0 +1,980 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Principal Component Analysis &#8212; Data Science for Business</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/myfile.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Clustering" href="3.%20Clustering.html" />
+    <link rel="prev" title="Unsupervised Machine Learning and Dimension Reduction" href="1.%20Dimension%20Reduction.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/datascience.webp" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Data Science for Business</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Data Science for business
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Introduction to Python and Data Science
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1.%20Intro/What%20is%20data%20science.html">
+   What is Data Science ?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1.%20Intro/What%20is%20python.html">
+   What is python ?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1.%20Intro/Presentation%20of%20this%20blog.html">
+   Presentation of this Blog
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Data Manipulation and Data Visualization
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2.%20Data%20visualisation/Data%20manipulation.html">
+   Data Manipulation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2.%20Data%20visualisation/Data%20visualization.html">
+   Data Visualization
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Supervised Machine Learning
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3.%20Supervised%20ML/Regression.html">
+   Regression
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3.%20Supervised%20ML/Classification.html">
+   Classification
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Unsupervised Machine Learning
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="1.%20Dimension%20Reduction.html">
+   Unsupervised Machine Learning and Dimension Reduction
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Principal Component Analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="3.%20Clustering.html">
+   Clustering
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Deep Learning and Optimization
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../5.%20Deep%20Learning/1.%20Introduction%20to%20Neural%20Networks.html">
+   Introduction to Neural Networks
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../5.%20Deep%20Learning/2.%20Deep%20Learning%20Optimization.html">
+   Deep Learning Problems and Optimization
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../5.%20Deep%20Learning/3.%20Convolution%20Neural%20Networks.html">
+   Convolutional Neural Networks
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Data Science for Finance
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../6.%20Data%20Science%20for%20Finance/Financial%20Data.html">
+   Financial Data
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Data Science and Sustainability
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../7.%20Data%20Science%20and%20Sustainability/Sustainable%20Data.html">
+   Sustainable Data
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/4. Unsupervised ML/2. Principal Component Analysis.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/executablebooks/jupyter-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/4. Unsupervised ML/2. Principal Component Analysis.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#theory-of-principal-component-analysis">
+   Theory of Principal Component Analysis
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#first-example-in-2-dimensions">
+     First example in 2 dimensions
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#generalisation-in-more-dimensions">
+     Generalisation in more dimensions
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#principal-component-analysis-in-python">
+   Principal Component Analysis in Python
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dimensional-example">
+     2-dimensional example :
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#create-the-dataset">
+       Create the dataset
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#pca-analysis">
+       PCA analysis
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#dimension-reduction">
+       Dimension reduction
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#example-in-higher-dimensions">
+   Example in higher dimensions
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Create the dataset
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#principal-components-analysis">
+     Principal Components Analysis
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     Dimension reduction
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Principal Component Analysis</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#theory-of-principal-component-analysis">
+   Theory of Principal Component Analysis
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#first-example-in-2-dimensions">
+     First example in 2 dimensions
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#generalisation-in-more-dimensions">
+     Generalisation in more dimensions
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#principal-component-analysis-in-python">
+   Principal Component Analysis in Python
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dimensional-example">
+     2-dimensional example :
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#create-the-dataset">
+       Create the dataset
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#pca-analysis">
+       PCA analysis
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#dimension-reduction">
+       Dimension reduction
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#example-in-higher-dimensions">
+   Example in higher dimensions
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Create the dataset
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#principal-components-analysis">
+     Principal Components Analysis
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     Dimension reduction
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="principal-component-analysis">
+<h1>Principal Component Analysis<a class="headerlink" href="#principal-component-analysis" title="Permalink to this headline">#</a></h1>
+<section id="theory-of-principal-component-analysis">
+<h2>Theory of Principal Component Analysis<a class="headerlink" href="#theory-of-principal-component-analysis" title="Permalink to this headline">#</a></h2>
+<p>As the name suggests, the objective of principal component analysis is to select the most important features in order to <strong>create a subspace of smaller dimension that retains the most information</strong>. It aims at decreasing the dimension of the dataset from <span class="math notranslate nohighlight">\(d\)</span> to <span class="math notranslate nohighlight">\(k\)</span> with <span class="math notranslate nohighlight">\( d \ge k\)</span>, while capturing the essence of the original data. We consider the dispertion of the data with respect to a feature as the importance of this feature, i.e the more dispersed the data is with respect to a feature, the more useful this feature will be in order to create clusters.</p>
+<section id="first-example-in-2-dimensions">
+<h3>First example in 2 dimensions<a class="headerlink" href="#first-example-in-2-dimensions" title="Permalink to this headline">#</a></h3>
+<center>
+    <figure>
+        <img src="./pictures/PCA_rotation.png">
+        <figcaption>Fig.1 - PCA example from wikipedia with the transformation to apply</figcaption>
+    </figure>
+</center>
+<p>On the example above, we can clearly see that the feature represented on the X-axis is the most important feature, whereas the one on the Y-axis is less important. Indeed, the variation is greater on the X-axis as it is on the Y-axis. The objective will be to rotate the data as shown in red in order to increase the variance with respect to the X axis, and decrease the variance with respect to the Y axis. As a result, it will create a new space where both axis are independent linear combinations of X and Y (see below). A little bit of mathematical formalization is necessary in order to clearly understand how one can compute the importance and the dispersion of each feature.</p>
+<ol class="simple">
+<li><p><strong>Find the center of the dataset</strong>. We can see on the graph above that the origin of the 2 vectors is at the center of the dataset. This point can be found by computing the mean of each feature, here we see that the mean of the data on the X axis is 1, and that the mean on the Y axis is 3. Therefore, the center of the dataset is the point (1,3). Then when move the data set so that its center is on the origin. This operation does not change the dataset, we only “move” the axis so that the origin is on the mean.</p></li>
+<li><p><strong>Find the direction of the main vector</strong>. The data above has a nice shape that makes quite obvious the direction in which the main vector should be. However, it is still necessary to compute the precise direction. This can be done by fitting a line through the dataset, the same way than for a linear regression problem, either by minimizing the square distances between the line and the points (<span class="math notranslate nohighlight">\(d_i\)</span>) or by maximizing the square distances between the projection of the point on the line (<span class="math notranslate nohighlight">\(d*_i\)</span>) and the origin. The equivalent holds because of the pytagorian theorem : since : <span class="math notranslate nohighlight">\(b^2_i = d_i^2 + d_i^{*2}\)</span>, then : <span class="math notranslate nohighlight">\(min(\sum_{i=1}^d d_i^2) \equiv max(\sum_{i=1}^d d^{*2}_i)\)</span>. We can have this intuition by looking at the line : as the line gets closer to the data point <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(d_i\)</span> decreases and <span class="math notranslate nohighlight">\(d*_i\)</span> increases as it gets closer to its hypothenuse.</p></li>
+</ol>
+<center>
+    <figure>
+        <img src="./pictures/fit_line.png" width="450" height="300">
+        <figcaption>Fig.2 - Line fitting through the dataset</figcaption>
+    </figure>
+</center>
+<p>Then, we can find the best fitting line by solving one of the two optimisation problems above. Mathematically, we can achieve this by computing the products of the data points and the vector <span class="math notranslate nohighlight">\(u\)</span> that defines the fitting line : <span class="math notranslate nohighlight">\(max(\sum_{i=1}^d (x_i^Tu)^2) \)</span> Here, the fitting line has a slope of 1/3, i.e. for each variation of 3 on the X axis, there is only a variation of 1 on the Y axis. This means that the feature X is 3 times more important than Y for the PC1, and thus the PC1 can be seen as the result of a <strong>linear combination such as : 3.X + Y</strong> . Indeed, in principal component analysis, we replace the features by a linear combination of the features. Therefore, a data point will not depend on <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> alone, but on two linear combination of both.</p>
+<p>Now that we have the the direction of the fitting line, we need to find the unit vector, i.e. the vector that corresponds to moving of one unit on the fitting line. Note that this unit vector corresponds to the eingenvector. We start from the vector above <span class="math notranslate nohighlight">\((3,1)\)</span> that we will scale to a length of 1 by using the pytagorian theorem. Obviously, the lienar relation between X and Y remains, as : <span class="math notranslate nohighlight">\(3 \times \frac{1}{\sqrt{10}} = \frac{3}{\sqrt{10}}\)</span>. This means that for the principal component 1, that we see on the figure below, the feature X is 3 times as important as the feature Y, and that PC1 depends on both X and Y.</p>
+<div class="math notranslate nohighlight">
+\[
+length_{vectorA}^2 = 3^2 + 1^2 \iff length_{vectorA} = \sqrt{10}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+PC1\ unit\ vector = (\frac{3}{\sqrt{10}},\frac{1}{\sqrt{10}})
+\]</div>
+<center>
+    <figure>
+        <img src="./pictures/unit_vector.png" width="450" height="300">
+        <figcaption>Fig.3 - Computing the unit vector</figcaption>
+    </figure>
+</center>
+<p>Because there are only 2 dimensions in this example, the PC2 is the line perpendicular to PC1 that goes through the origin. Indeed, in order to classify to importance of each PC, they have to be independent, so PC2 has to be orthogonal to PC1, which, in a 2D space, is a perpendicular line. Otherwise, a part of a change in PC1 could be explained as a change in PC2,wich can easely be represented graphically. The slope of the PC2 line is -3, wich means that PC2 is a linear combination of the form : -X+3Y. Then again we scale the vector :</p>
+<div class="math notranslate nohighlight">
+\[
+PC2\ unit\ vector = (\frac{-1}{\sqrt{10}},\frac{3}{\sqrt{10}})
+\]</div>
+<p>Once we have the two unit vectors and therefore the two PC, we can project the data set onto this new space. Then we rotate the new space and we obtain a new representation of the dataset that extends the most important feature. We can see that the relation between the points remains the same as on fig.2, however the variance increased on the X axis and decreased on the Y axis. The points are now represented as a function of PC1 and PC2, both of which are independent linear combinations of X and Y.</p>
+<div style="display:flex;justify-content:space-around">
+    <img src="./pictures/PCA_projection.png" width="350" height="250">
+    <img src="./pictures/PCA_newspace.png" width="350" height="250" style="transform:rotate(-4deg);">
+</div>
+<br>
+Finally, we can compute the importance of each feature in the total variation of the PCs. First, we compute the sum of square distances of the projections of the points relatively to the origin divided by (n-1). For PC1 it is the sum of square distances between each green cross and the origin devided by 9 (there are 10 data points), and for PC2 we do the same with the blue crosses. Let's say for the sake of the example that the variation for PC1 is equal to 20, and that it is equal to 5 for PC2. Then the total variation is equal to 20, and PC1 accounts for 20/25 = 80% of the variation, and PC2 accounts for 20% of the variation. 
+</section>
+<section id="generalisation-in-more-dimensions">
+<h3>Generalisation in more dimensions<a class="headerlink" href="#generalisation-in-more-dimensions" title="Permalink to this headline">#</a></h3>
+<p>In a real life scenario where there are many more features and dimensions, it is impossible to proceed by representing the dataset in the entire space. Indeed, even the simple example above of a customer dataset is in 5 dimensions, and thus impossible to represent graphically. In order to do a PCA and classify the importance of each component, it is necessary to adopt a mathematical approach and to compute the <strong>covariance matrix</strong>. The covariance matrix, called <span class="math notranslate nohighlight">\(\Sigma\)</span>, is a matrix where the element <span class="math notranslate nohighlight">\((i,j)\)</span> corresponds to the covariance of the features <span class="math notranslate nohighlight">\(X_i,X_j\)</span>. Note : the covariance of <span class="math notranslate nohighlight">\(X_i,X_i\)</span> is equal to the variance of <span class="math notranslate nohighlight">\(X_i\)</span>, therefore the diagonal of the covariance matrix is composed of the variance of each feature.</p>
+<div class="math notranslate nohighlight">
+\[
+cov(X_i,X_j) = E[(X_i - \mu_i)(X_j - \mu_j)] 
+\]</div>
+<div style="text-align:center">
+<p><em><small>with <span class="math notranslate nohighlight">\(\mu_i\)</span>, <span class="math notranslate nohighlight">\(\mu_j\)</span> the expected values of the <span class="math notranslate nohighlight">\(i^{th}\)</span> and <span class="math notranslate nohighlight">\(j^{th}\)</span> features.</small></em></p>
+</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+\Sigma 
+&amp; = E[(\boldsymbol{X}−E[\boldsymbol{X}])(\boldsymbol{X}−E[\boldsymbol{X}])^T] \\
+&amp; = \frac{1}{n} \sum_i x_ix_i^T
+\end{align}
+\end{split}\]</div>
+<div style="text-align:center">
+<p><em><small>with <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span> the matrix of observations.</small></em></p>
+</div>
+<p>Once we computed the covariance matrix, we can find the <strong>corresponding eingenvectors and eigenvalues</strong>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Remember that <span class="math notranslate nohighlight">\(\lambda\)</span> is said to be an <strong>eigenvalue of</strong> <span class="math notranslate nohighlight">\(\Sigma\)</span> if:</p>
+<div class="math notranslate nohighlight">
+\[\boldsymbol{\Sigma - \lambda I = 0 \Rightarrow \Sigma u = \lambda u}\]</div>
+</div>
+<p>Because the features are supposed to be linearly independent, we should find the same number of eingenvectors and eingenvalues as features. Mathematically, we can show that finding : <span class="math notranslate nohighlight">\( max(\sum_{i=1}^d (x_i^Tu)^2) \text{, with : }u^Tu = 1 \)</span> corresponds to finding the matrix of eingenvectors. Recall that it is by solving this optimization problem that we find the fitting line. We can find the solution to this maximisation problem by using the Lagrange function <span class="math notranslate nohighlight">\(L\)</span> and its derivative with respect to <span class="math notranslate nohighlight">\(u\)</span> in order to find the directions that preserves the most information after the projection, and then find <span class="math notranslate nohighlight">\(\lambda\)</span> and <span class="math notranslate nohighlight">\(u\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+max[\sum_{i=1}^d (x_i^Tu)^2]
+&amp; = max[\sum_{i=1}^d (u^Tx_i)(x_i^Tu)] \\ 
+&amp; = \boldsymbol{max[u^T\Sigma u]} 
+\end{align}
+\end{split}\]</div>
+<div style="text-align:center;margin-top:10px;margin-bottom:30px">
+<em><small>The maximization problem leads to finding the eigenvectors with the Lagrange function :</small></em>
+</div>
+<div class="math notranslate nohighlight">
+\[\begin{split} 
+\begin{align}
+\text{Lagrange function : } &amp; L(u,\lambda) = u^T\Sigma u - \lambda ( u^Tu-1)
+\\
+\text{First derivative : } &amp; \frac{\partial L}{\partial u} = 2 \Sigma u - 2 \lambda u
+\\
+\text{We set : } &amp; 2 \Sigma u - 2 \lambda u = 0 \iff \boldsymbol{ \Sigma u = \lambda u}
+\end{align}
+\end{split}\]</div>
+<div style="text-align:center;margin-top:10px;margin-bottom:30px">
+<em><small>We solve this last equation to find the eigenvalues and eigenvectors:</small></em>
+</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+(\lambda_1, ... ,\lambda_d) \text{ solution of : } &amp; \Sigma - \lambda I = 0
+\\
+\text{Therefore : }&amp; \forall \lambda_i \in (\lambda_1, ... ,\lambda_d), \exists u_i \ \Sigma u_i = \lambda_i u_i
+\\
+(u_1, ... ,u_d) \text{ solution of : } &amp; (\Sigma - \lambda_i I) u_i= 0
+\end{align}
+\end{split}\]</div>
+<p>Now that we have the eingevectors and their associated eigenvalues, we can classify them by their order of importance: the greater the eingenvalue, the more important the eigenvector is. We then select the k-biggest eigenvectors (the data scientist gets to choose k!). Note that by definition, the total variation is given by the sum of the variances. It turns out that this is also equal to the sum of the eigenvalues of the variance-covariance matrix: <span class="math notranslate nohighlight">\(\sum_{i=1}^k \lambda_i\)</span>. As a consequence, it is only by selecting the k-biggest eigenvalues that we get the largest variation possible for the subspace. Finally, we project the dataset onto the newly formed space of size k by multiplying the matrix of eigenvectors with the standardized dataset :</p>
+<div class="math notranslate nohighlight">
+\[
+ProjectedDataSet = FeatureVector^T * StandardizedDataSet
+\]</div>
+<p>In conclusion, we start by looking at the dataset in order to compute the covariance matrix (1). Then we compute the eigenvectors and eigenvalues (2). Finally, we can project the data onto a smaller space (3). Here, the space is in 4 dimensions, which can be represented with the help of a color chart.</p>
+<center>
+    <figure>
+        <img src="./pictures/PCA_summary.png" >
+        <figcaption>Fig.4 - Summary</figcaption>
+    </figure>
+</center>
+<div class="tip admonition">
+<p class="admonition-title">Sources and other documentation </p>
+<p><a href="https://www.youtube.com/watch?v=FD4DeN81ODY"> PCA by Visually Explained</a><br>
+<a href="https://www.youtube.com/watch?v=_UVHneBUBW0"> PCA by StatQuest</a><br>
+<a href="https://online.stat.psu.edu/stat505/lesson/4/4.5">Eigenvectors and eingevalues explained </a></p>
+</div>
+</section>
+</section>
+<section id="principal-component-analysis-in-python">
+<h2>Principal Component Analysis in Python<a class="headerlink" href="#principal-component-analysis-in-python" title="Permalink to this headline">#</a></h2>
+<section id="dimensional-example">
+<h3>2-dimensional example :<a class="headerlink" href="#dimensional-example" title="Permalink to this headline">#</a></h3>
+<section id="create-the-dataset">
+<h4>Create the dataset<a class="headerlink" href="#create-the-dataset" title="Permalink to this headline">#</a></h4>
+<p>We start by creating a random dataset in 2 dimensions with numpy. The cell below shows how to quickly create a random data set in 2 dimensions, and how to transform it. For the purpose of the exercise, we will recreate the dataset from fig.2, where the points are distributed along a line that has a slope of 3. Then, we use the function <strong>PCA</strong> from sklearn in order to do our PCA analysis.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_regression</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">scale</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># generate 2d classification dataset</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_regression</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">random_state</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">scale</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">*</span><span class="mi">3</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">scale</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Reproduction of the dataset in fig.2&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;figure.figsize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/2. Principal Component Analysis_6_0.png" src="../_images/2. Principal Component Analysis_6_0.png" />
+</div>
+</div>
+</section>
+<section id="pca-analysis">
+<h4>PCA analysis<a class="headerlink" href="#pca-analysis" title="Permalink to this headline">#</a></h4>
+<p>Now that the dataset is ready, we can work on the principal component analysis :</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># We use the PCA function from sklearn</span>
+<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
+
+<span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># The dataset is in 2 dimension, therefore we set n_components to 2 </span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">X</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">y</span><span class="p">,(</span><span class="mi">200</span><span class="p">,</span><span class="mi">1</span><span class="p">))),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">pca</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+
+<span class="n">components</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">components_</span>
+<span class="n">variance</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">explained_variance_</span>
+<span class="n">variance_ratio</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">explained_variance_ratio_</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The unit vector for PC1 is: </span><span class="si">{</span><span class="n">components</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The unit vector for PC2 is: </span><span class="si">{</span><span class="n">components</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PC1 variance is: </span><span class="si">{</span><span class="n">variance</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">, and accounts for </span><span class="si">{</span><span class="n">variance</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="mf">.2</span><span class="n">f</span><span class="si">}</span><span class="s2">% of the total variance&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PC2 variance is: </span><span class="si">{</span><span class="n">variance</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">, and accounts for </span><span class="si">{</span><span class="n">variance</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="mf">.2</span><span class="n">f</span><span class="si">}</span><span class="s2">% of the total variance&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The unit vector for PC1 is: [0.95276949 0.30369443]
+The unit vector for PC2 is: [-0.30369443  0.95276949]
+PC1 variance is: 9.954501880356124, and accounts for 0.99% of the total variance
+PC2 variance is: 0.09574937592527562, and accounts for 0.01% of the total variance
+</pre></div>
+</div>
+</div>
+</div>
+<p>Knowing that <span class="math notranslate nohighlight">\( \frac{1}{\sqrt{10}} \approx 0.31\)</span>, we can see that we find the very similar vectors as we did above. However, the data being less noisy here than in our first example, we found a PC1 that accounts for a larger part of the variation !</p>
+</section>
+<section id="dimension-reduction">
+<h4>Dimension reduction<a class="headerlink" href="#dimension-reduction" title="Permalink to this headline">#</a></h4>
+<p>Sklearn also allows to reduce the dimension of the dataset. The graph below represent the projection of the dataset onto PC1.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reduce the dataset to 1 dimension : </span>
+<span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">pca</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+<span class="n">X_pca</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;original shape:   &quot;</span><span class="p">,</span> <span class="n">dataset</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;transformed shape:&quot;</span><span class="p">,</span> <span class="n">X_pca</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="n">X_new</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">X_pca</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">dataset</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">dataset</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_new</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_new</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>original shape:    (200, 2)
+transformed shape: (200, 1)
+</pre></div>
+</div>
+<img alt="../_images/2. Principal Component Analysis_13_1.png" src="../_images/2. Principal Component Analysis_13_1.png" />
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="example-in-higher-dimensions">
+<h2>Example in higher dimensions<a class="headerlink" href="#example-in-higher-dimensions" title="Permalink to this headline">#</a></h2>
+<p>This example is closer to a real life example. We consider a classification problem in 20 dimensions and we aim at reducing its size.</p>
+<section id="id1">
+<h3>Create the dataset<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#Generate a random dataset </span>
+<span class="n">X</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">make_classification</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">n_informative</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">random_state</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span> 
+<span class="c1">#Here we will work only with X in 20 dimensions, with only 4 useful features </span>
+<span class="nb">print</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(200, 20) (200,)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="principal-components-analysis">
+<h3>Principal Components Analysis<a class="headerlink" href="#principal-components-analysis" title="Permalink to this headline">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#Then we do our PCA and look at the most important components </span>
+<span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">()</span>
+<span class="n">pca_X</span> <span class="o">=</span><span class="n">pca</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">pca_names</span> <span class="o">=</span> <span class="n">pca_X</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">()</span>
+<span class="n">pca_values</span> <span class="o">=</span> <span class="n">pca_X</span><span class="o">.</span><span class="n">singular_values_</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">pca_names</span><span class="p">,</span><span class="n">pca_values</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/2. Principal Component Analysis_19_0.png" src="../_images/2. Principal Component Analysis_19_0.png" />
+</div>
+</div>
+<p>We see that the 3 first PC are significantly more important than the others. We can deepen our analysis by looking at the features that influence the most those 3 PC.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X_axis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="n">components</span> <span class="o">=</span> <span class="n">pca_X</span><span class="o">.</span><span class="n">components_</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">X_axis</span> <span class="o">-</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">components</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;PC1&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">X_axis</span> <span class="p">,</span> <span class="n">components</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;PC2&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">X_axis</span> <span class="o">+</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">components</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;PC3&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">X_axis</span><span class="p">,</span> <span class="n">X_axis</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Features&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Feature importance&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Feature importance in PC&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/2. Principal Component Analysis_22_0.png" src="../_images/2. Principal Component Analysis_22_0.png" />
+</div>
+</div>
+</section>
+<section id="id2">
+<h3>Dimension reduction<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reduce the dataset to 3 dimensions : </span>
+<span class="n">pca_3D</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">pca_3D</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">projection_X</span> <span class="o">=</span> <span class="n">pca_3D</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;original shape:   &quot;</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;transformed shape:&quot;</span><span class="p">,</span> <span class="n">projection_X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>original shape:    (200, 20)
+transformed shape: (200, 3)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="kn">import</span> <span class="n">Axes3D</span>
+
+<span class="c1"># axes instance</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">Axes3D</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">auto_add_to_figure</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+
+<span class="c1"># plot</span>
+<span class="n">sc</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">projection_X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">projection_X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">projection_X</span><span class="p">[:,</span><span class="mi">2</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">35</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;bwr&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;PC1&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;PC2&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s1">&#39;PC3&#39;</span><span class="p">)</span>
+
+<span class="c1"># legend</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="o">*</span><span class="n">sc</span><span class="o">.</span><span class="n">legend_elements</span><span class="p">(),</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># save</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/2. Principal Component Analysis_27_0.png" src="../_images/2. Principal Component Analysis_27_0.png" />
+</div>
+</div>
+<p>We now have our dataset represented in a 3 dimensional space defined by the PC1, PC2 and PC3, and we can see two different clusters for each class. We can now easily analyse our dataset, due to Principal Component Analysis !</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./4. Unsupervised ML"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="1.%20Dimension%20Reduction.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Unsupervised Machine Learning and Dimension Reduction</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="3.%20Clustering.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Clustering</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Guillaume de Surville<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

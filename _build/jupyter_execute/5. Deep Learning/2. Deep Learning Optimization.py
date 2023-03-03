@@ -96,7 +96,7 @@
 # 
 # Here are two exemples, in 1d and 2d:
 # 
-# <div style="display:flex;justify-content: space-around;">
+# <div style="display:flex;justify-content: space-around;width:100%">
 # <img src="pictures/minimum.png">
 # <img src="pictures/minimum2D.png">
 # <br>
