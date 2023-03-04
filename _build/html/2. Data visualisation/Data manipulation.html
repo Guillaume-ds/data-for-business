@@ -389,12 +389,63 @@ title="Print to PDF"
     </ul>
   </div>
 </div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
 
     </div>
 </div>
 
 <!-- Table of contents -->
 <div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#load-the-data">
+   1. Load the data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#clean-and-visualize-the-data">
+   2. Clean and visualize the data
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#outsiders">
+     1. Outsiders
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#correlation">
+     2. Correlation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#discrete-values">
+     3. Discrete values
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#continous-values">
+     4. Continous values
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
 </div>
     </div>
     <div class="article row">
@@ -406,6 +457,46 @@ title="Print to PDF"
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#load-the-data">
+   1. Load the data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#clean-and-visualize-the-data">
+   2. Clean and visualize the data
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#outsiders">
+     1. Outsiders
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#correlation">
+     2. Correlation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#discrete-values">
+     3. Discrete values
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#continous-values">
+     4. Continous values
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -415,6 +506,454 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="data-manipulation">
 <h1>Data Manipulation<a class="headerlink" href="#data-manipulation" title="Permalink to this headline">#</a></h1>
+<section id="load-the-data">
+<h2>1. Load the data<a class="headerlink" href="#load-the-data" title="Permalink to this headline">#</a></h2>
+<p>Pandas and numpy are the main packages used for loading/creating data sets. However, in a real case scenario, you might need a specific package to access a data base (boto3, sql…) or to do data transformation. Then, download the data set : <a class="reference external" href="https://www.kaggle.com/datasets/altruistdelhite04/loan-prediction-problem-dataset?resource=download">https://www.kaggle.com/datasets/altruistdelhite04/loan-prediction-problem-dataset?resource=download</a>) and unzip the file and load it in python with pandas. As the data sets are from an external source, we will check that there are correctly splited.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span> 
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> 
+
+<span class="n">train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/loan/train.csv&quot;</span><span class="p">)</span>
+<span class="n">test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/loan/test.csv&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">train</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">test</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">S1</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s2">&quot;Loan_ID&quot;</span><span class="p">])</span>
+<span class="n">S2</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="s2">&quot;Loan_ID&quot;</span><span class="p">])</span>
+
+<span class="k">if</span> <span class="n">S1</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">S2</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">set</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error, there are common elements in train and test data sets : &quot;</span><span class="p">,</span> <span class="n">S1</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">S2</span><span class="p">))</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Datasets are correctly splited&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;Loan_ID&#39;, &#39;Gender&#39;, &#39;Married&#39;, &#39;Dependents&#39;, &#39;Education&#39;, &#39;Self_Employed&#39;, &#39;ApplicantIncome&#39;, &#39;CoapplicantIncome&#39;, &#39;LoanAmount&#39;, &#39;Loan_Amount_Term&#39;, &#39;Credit_History&#39;, &#39;Property_Area&#39;, &#39;Loan_Status&#39;] 
+
+[&#39;Loan_ID&#39;, &#39;Gender&#39;, &#39;Married&#39;, &#39;Dependents&#39;, &#39;Education&#39;, &#39;Self_Employed&#39;, &#39;ApplicantIncome&#39;, &#39;CoapplicantIncome&#39;, &#39;LoanAmount&#39;, &#39;Loan_Amount_Term&#39;, &#39;Credit_History&#39;, &#39;Property_Area&#39;] 
+
+Datasets are correctly splited
+</pre></div>
+</div>
+</div>
+</div>
+<p>We see that the train dataset has one column more than the test dataset, it is the target feature, what we want to predict. Now that the data has been loaded and that we checked that the two datasets are different, we can do data exploration.</p>
+</section>
+<section id="clean-and-visualize-the-data">
+<h2>2. Clean and visualize the data<a class="headerlink" href="#clean-and-visualize-the-data" title="Permalink to this headline">#</a></h2>
+<p>We will import two libraries for data visualisation : seaborn and matplotlib are very common library used for data visualization. Other common librairies are ggplot, altair …</p>
+<p>First, let’s look at the type of data. We will focuse on the train dataset. Some useful functions are head, info, isnull and describe. We see that Loan_ID is not a relevant field for our problem, therefre we can drop it immediatly.</p>
+<div class="cell tag_output_scroll tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt 
+import seaborn as sns
+
+train.head()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Loan_ID</th>
+      <th>Gender</th>
+      <th>Married</th>
+      <th>Dependents</th>
+      <th>Education</th>
+      <th>Self_Employed</th>
+      <th>ApplicantIncome</th>
+      <th>CoapplicantIncome</th>
+      <th>LoanAmount</th>
+      <th>Loan_Amount_Term</th>
+      <th>Credit_History</th>
+      <th>Property_Area</th>
+      <th>Loan_Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>LP001002</td>
+      <td>Male</td>
+      <td>No</td>
+      <td>0</td>
+      <td>Graduate</td>
+      <td>No</td>
+      <td>5849</td>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>360.0</td>
+      <td>1.0</td>
+      <td>Urban</td>
+      <td>Y</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>LP001003</td>
+      <td>Male</td>
+      <td>Yes</td>
+      <td>1</td>
+      <td>Graduate</td>
+      <td>No</td>
+      <td>4583</td>
+      <td>1508.0</td>
+      <td>128.0</td>
+      <td>360.0</td>
+      <td>1.0</td>
+      <td>Rural</td>
+      <td>N</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>LP001005</td>
+      <td>Male</td>
+      <td>Yes</td>
+      <td>0</td>
+      <td>Graduate</td>
+      <td>Yes</td>
+      <td>3000</td>
+      <td>0.0</td>
+      <td>66.0</td>
+      <td>360.0</td>
+      <td>1.0</td>
+      <td>Urban</td>
+      <td>Y</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>LP001006</td>
+      <td>Male</td>
+      <td>Yes</td>
+      <td>0</td>
+      <td>Not Graduate</td>
+      <td>No</td>
+      <td>2583</td>
+      <td>2358.0</td>
+      <td>120.0</td>
+      <td>360.0</td>
+      <td>1.0</td>
+      <td>Urban</td>
+      <td>Y</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>LP001008</td>
+      <td>Male</td>
+      <td>No</td>
+      <td>0</td>
+      <td>Graduate</td>
+      <td>No</td>
+      <td>6000</td>
+      <td>0.0</td>
+      <td>141.0</td>
+      <td>360.0</td>
+      <td>1.0</td>
+      <td>Urban</td>
+      <td>Y</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>train.drop(&#39;Loan_ID&#39;,axis=1,inplace=True)
+print(train.isnull().sum())
+train.describe()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Gender               13
+Married               3
+Dependents           15
+Education             0
+Self_Employed        32
+ApplicantIncome       0
+CoapplicantIncome     0
+LoanAmount           22
+Loan_Amount_Term     14
+Credit_History       50
+Property_Area         0
+Loan_Status           0
+dtype: int64
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ApplicantIncome</th>
+      <th>CoapplicantIncome</th>
+      <th>LoanAmount</th>
+      <th>Loan_Amount_Term</th>
+      <th>Credit_History</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>614.000000</td>
+      <td>614.000000</td>
+      <td>592.000000</td>
+      <td>600.00000</td>
+      <td>564.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>5403.459283</td>
+      <td>1621.245798</td>
+      <td>146.412162</td>
+      <td>342.00000</td>
+      <td>0.842199</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>6109.041673</td>
+      <td>2926.248369</td>
+      <td>85.587325</td>
+      <td>65.12041</td>
+      <td>0.364878</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>150.000000</td>
+      <td>0.000000</td>
+      <td>9.000000</td>
+      <td>12.00000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>2877.500000</td>
+      <td>0.000000</td>
+      <td>100.000000</td>
+      <td>360.00000</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>3812.500000</td>
+      <td>1188.500000</td>
+      <td>128.000000</td>
+      <td>360.00000</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>5795.000000</td>
+      <td>2297.250000</td>
+      <td>168.000000</td>
+      <td>360.00000</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>81000.000000</td>
+      <td>41667.000000</td>
+      <td>700.000000</td>
+      <td>480.00000</td>
+      <td>1.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div style="text-align:justify">
+As we can see, there are many null values. Keeping them like this would negatively affect the performance of the model, therefore we have to find a way to remove those values. One way to deal with such values is to simply remove the data entry. However, this reduces the size of the data set on which we will train the model. As a consequence, it is often better to find a way to replace null values by other values that are likely to be close to the truth. This can be done by inserting the most common value or the mode, the mean, a zero value... <br>
+Here we will treat each cases differently : 
+</div><ul class="simple">
+<li><p>Drop NA</p></li>
+</ul>
+<div style="text-align:justify">
+For LoanAmount and Credit_History we can either replace the missing values by their means, or drop the entries with missing values. As both of those fields have an important standart deviations in comparison to their mean, it could create a significant noise to replace them by their mean (cf. describe table). Therefore, we will drop the lines with either a missing loan amount or loan amount term. We can do that with the dropna function by specifying the columns in which it should look for NA values. 
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>train = train.dropna(subset=[&#39;LoanAmount&#39;, &#39;Credit_History&#39;])
+train[[&#39;LoanAmount&#39;, &#39;Credit_History&#39;]].isnull().sum()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LoanAmount        0
+Credit_History    0
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Fill with the mean</p></li>
+</ul>
+<div style="text-align:justify">
+For Loan_Amount_Term we can replace the missing values by the mean of this duration.
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>Mean_Amout_Term = int(train[&#39;Loan_Amount_Term&#39;].mean())
+print(&quot;Missing values will be replaced by : &quot;,Mean_Amout_Term)
+train[&#39;Loan_Amount_Term&#39;].fillna(Mean_Amout_Term ,inplace=True)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Missing values will be replaced by :  342
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Fill with the mode</p></li>
+</ul>
+<div style="text-align:justify">
+For other fields we can replace the missing values by their mode. This would make sense as their mean is close to this value. 
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(&quot;The mode of Gender history is : &quot;,train[&#39;Self_Employed&#39;].mode()[0]) 
+train[&#39;Married&#39;].fillna(train[&#39;Married&#39;].mode()[0],inplace=True)
+train[&#39;Gender&#39;].fillna(train[&#39;Gender&#39;].mode()[0],inplace=True)
+train[&#39;Self_Employed&#39;].fillna(train[&#39;Self_Employed&#39;].mode()[0],inplace=True)
+train[&#39;Dependents&#39;].fillna(train[&#39;Dependents&#39;].mode()[0],inplace=True)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mode of Gender history is :  No
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can recount the values with <code class="docutils literal notranslate"><span class="pre">train.isnull().sum()</span></code>and see that we don’t have null values anymore. We can also look a the types of the column, and the number of unique values. The results are making sense, except for dependents that is an “object” (see <a class="reference external" href="http://train.info">train.info</a>()) when it is supposed to be an integer. As we can see below, values above 3 are regrouped in a unique field “+3” that we can replace by “3” as in order to have only integer. Now that the trained dataset is cleaned, we can use data visualisation in order to get a better understanding of our working material. We will look for outsiders values, correlations…</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>train[&#39;Dependents&#39;].value_counts()
+
+train[&#39;Dependents&#39;].replace(&#39;3+&#39;,3,inplace=True)
+train[&#39;Dependents&#39;]=train[&#39;Dependents&#39;].astype(&#39;int&#39;)
+train[&#39;Dependents&#39;].value_counts()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    319
+2     92
+1     86
+3     46
+Name: Dependents, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<section id="outsiders">
+<h3>1. Outsiders<a class="headerlink" href="#outsiders" title="Permalink to this headline">#</a></h3>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sns.catplot(data=train,kind=&#39;box&#39;)
+plt.xticks(rotation=45)
+plt.grid()
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Data manipulation_18_0.png" src="../_images/Data manipulation_18_0.png" />
+</div>
+</div>
+</section>
+<section id="correlation">
+<h3>2. Correlation<a class="headerlink" href="#correlation" title="Permalink to this headline">#</a></h3>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.figure(figsize=(15,5))
+sns.heatmap(train[[&quot;ApplicantIncome&quot;,&quot;CoapplicantIncome&quot;,&quot;LoanAmount&quot;,&quot;Loan_Amount_Term&quot;,&quot;Credit_History&quot;]].corr(),annot=True)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Data manipulation_20_0.png" src="../_images/Data manipulation_20_0.png" />
+</div>
+</div>
+</section>
+<section id="discrete-values">
+<h3>3. Discrete values<a class="headerlink" href="#discrete-values" title="Permalink to this headline">#</a></h3>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>Discrete_Values = [&#39;Loan_Status&#39;,&#39;Gender&#39;, &#39;Married&#39;, &#39;Dependents&#39;, &#39;Education&#39;, &#39;Self_Employed&#39;, &#39;Loan_Amount_Term&#39;, &#39;Credit_History&#39;, &#39;Property_Area&#39;]
+
+fig, axs = plt.subplots(figsize=(25,6),ncols=3,nrows=3)
+plt.subplots_adjust(hspace=0.5)
+
+for column, ax in zip(Discrete_Values, axs.ravel()):
+    sns.countplot(x=train[column],hue=train[&#39;Loan_Status&#39;],ax=ax)
+
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Data manipulation_22_0.png" src="../_images/Data manipulation_22_0.png" />
+</div>
+</div>
+</section>
+<section id="continous-values">
+<h3>4. Continous values<a class="headerlink" href="#continous-values" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>Continous_Values = [&#39;ApplicantIncome&#39;,&#39;CoapplicantIncome&#39;, &#39;LoanAmount&#39;, &#39;Loan_Amount_Term&#39;, &#39;ApplicantIncome&#39;]
+
+fig, axs = plt.subplots(figsize=(25,6),ncols=5,nrows=1)
+plt.subplots_adjust(hspace=0.5)
+
+for column, ax in zip(Continous_Values, axs.ravel()):
+    sns.kdeplot(x=train[column],hue=train[&#39;Loan_Status&#39;],ax=ax,fill=True)
+plt.show()
+
+fig, axs = plt.subplots(figsize=(25,6),ncols=5,nrows=1)
+plt.subplots_adjust(hspace=0.5)
+for column, ax in zip(Continous_Values, axs.ravel()):
+    sns.kdeplot(x=train[column],hue=train[&#39;Gender&#39;],ax=ax,fill=True)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Data manipulation_24_0.png" src="../_images/Data manipulation_24_0.png" />
+<img alt="../_images/Data manipulation_24_1.png" src="../_images/Data manipulation_24_1.png" />
+</div>
+</div>
+</section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
