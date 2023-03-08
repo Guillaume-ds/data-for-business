@@ -140,7 +140,7 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Data Manipulation and Data Visualization
+  Working with Data
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -465,6 +465,23 @@ title="Print to PDF"
      CatBoost Classifier
     </a>
    </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#knn-k-nearest-neighbors">
+     KNN (K Nearest Neighbors)
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#what-is-knn">
+       What is KNN
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#knn-with-python">
+       KNN with python
+      </a>
+     </li>
+    </ul>
+   </li>
   </ul>
  </li>
 </ul>
@@ -538,6 +555,23 @@ title="Print to PDF"
      CatBoost Classifier
     </a>
    </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#knn-k-nearest-neighbors">
+     KNN (K Nearest Neighbors)
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#what-is-knn">
+       What is KNN
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#knn-with-python">
+       KNN with python
+      </a>
+     </li>
+    </ul>
+   </li>
   </ul>
  </li>
 </ul>
@@ -605,7 +639,7 @@ title="Print to PDF"
 <span class="n">train</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
-<div class="cell tag_remove-input docutils container">
+<div class="cell tag_remove-input tag_output-scroll tag_output_scroll docutils container">
 <div class="cell_output docutils container">
 <div class="output text_html"><div>
 <style scoped>
@@ -774,44 +808,56 @@ title="Print to PDF"
 <p>5 rows × 56 columns</p>
 </div></div></div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn.preprocessing import LabelEncoder
-from sklearn.metrics import accuracy_score
+<div class="cell tag_remove-input docutils container">
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">LabelEncoder</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
 
-X_train, X_test, y_train, y_test = train_test_split(train.drop(columns=[&#39;Cover_Type&#39;,&#39;Id&#39;]), train.Cover_Type, test_size=0.2)
-le = LabelEncoder()
-y_train_encode = le.fit_transform(y_train)
-y_test_encode = le.transform(y_test)
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">train</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Cover_Type&#39;</span><span class="p">,</span><span class="s1">&#39;Id&#39;</span><span class="p">]),</span> <span class="n">train</span><span class="o">.</span><span class="n">Cover_Type</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="n">le</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span>
+<span class="n">y_train_encode</span> <span class="o">=</span> <span class="n">le</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_test_encode</span> <span class="o">=</span> <span class="n">le</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span>
 </pre></div>
-</div>
-</div>
 </div>
 </section>
 <section id="xgboost-classifier">
 <h3>XGBoost Classifier<a class="headerlink" href="#xgboost-classifier" title="Permalink to this headline">#</a></h3>
-<p>XGBoost is one of the most popular and powerfull tool for datascience.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import xgboost as xgb
+<p>XGBoost is one of the most popular <span class="math notranslate nohighlight">\(\textbf{gradient boosting}\)</span> library and is particularly efficient when it comes to classification. It relies on a boosting technic, which belongs to ensemble technics, that consists in training different model sequentially so that a specific tree can learn from the mistakes made by the previous ones.</p>
+<p>More precisely, <span class="math notranslate nohighlight">\(\textbf{boosting}\)</span> is a machine learning technique that combines multiple weak learners, i.e. simple models that are slightly better than random guessing, to create a single strong learner (complex model). It is an iterative process, during which each weak learner is trained on the mistakes of the previous weak learner. At the end of the process, the weak learners are then combined to create a final strong learner which is more accurate and powerful than any of the individual weak learners. Boosting is often used in ensemble learning methods to improve the accuracy of predictions, and models are added until there is no room left for improvement.</p>
+<p>Gradient boosting is an iterative technique based on boosting for optimizing a loss function by combining the output of multiple weak models. It works by sequentially adding a new model to the ensemble, each of which is trained to minimize the loss of the combined model on the training set. Let <span class="math notranslate nohighlight">\(f_1(x), ..., f_M(x)\)</span> be weak models, and <span class="math notranslate nohighlight">\(F_m(x)\)</span> the combined model after <span class="math notranslate nohighlight">\(m\)</span> weak models have been added. The combined model, <span class="math notranslate nohighlight">\(F_m(x)\)</span>, is updated at each iteration <span class="math notranslate nohighlight">\(m\)</span> using the following formula:</p>
+<div class="math notranslate nohighlight">
+\[F_m(x) = F_{m-1}(x) + \alpha f_m(x)\]</div>
+<p>where <span class="math notranslate nohighlight">\(\alpha\)</span> is a parameter controlling the contribution of the new model. The parameter <span class="math notranslate nohighlight">\(\alpha\)</span> is learned by minimizing an objective function, usually the mean squared error, on the training set:</p>
+<div class="math notranslate nohighlight">
+\[
+\alpha = \underset{\alpha}{\operatorname{argmin}} \sum_{i=1}^n \left[y_i - F_{m-1}(x_i) - \alpha f_m(x_i) \right]^2
+\]</div>
+<p>XGBoost works by using the gradient boosting technique, which is a sequential approach to building a predictive model. This technique is used to optimize a loss function by adding weak learners in a step-wise fashion. The algorithm works by first fitting a simple model to the data, then sequentially adding more weak learners to the model and updating the model parameters in order to minimize the loss function. Mathematically, XGBoost works by minimizing the following objective function:</p>
+<div class="math notranslate nohighlight">
+\[
+\underset{\theta}{min}\sum_{i=1}^{n}\left[ l\left(y_{i},\hat{y_{i}}\right) + \sum_{j=1}^{K}\Omega\left(f_{j}\right)\right]
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(y_i\)</span> is the target value for the <span class="math notranslate nohighlight">\(i^{th}\)</span> data point, <span class="math notranslate nohighlight">\(\hat{y_i}\)</span> is the predicted value, <span class="math notranslate nohighlight">\(K\)</span> is the number of weak learners, <span class="math notranslate nohighlight">\(f_j\)</span> is the <span class="math notranslate nohighlight">\(j^{th}\)</span> weak learner, and <span class="math notranslate nohighlight">\(\Omega\)</span> is the regularization term. The first term in the objective is the loss function which measures the discrepancy between the actual and predicted values. The second term is the regularization term which penalizes complex models.</p>
+<p>You can learn more here : <a class="reference external" href="https://arxiv.org/pdf/1603.02754.pdf">https://arxiv.org/pdf/1603.02754.pdf</a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">xgboost</span> <span class="k">as</span> <span class="nn">xgb</span>
 
-XGBClassifier = xgb.XGBClassifier()
-XGBClassifier.fit(X_train, y_train_encode)
+<span class="n">XGBClassifier</span> <span class="o">=</span> <span class="n">xgb</span><span class="o">.</span><span class="n">XGBClassifier</span><span class="p">()</span>
+<span class="n">XGBClassifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train_encode</span><span class="p">)</span>
 
-output_train = XGBClassifier.predict(X_train)
-output_test = XGBClassifier.predict(X_test)
+<span class="n">output_train</span> <span class="o">=</span> <span class="n">XGBClassifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">output_test</span> <span class="o">=</span> <span class="n">XGBClassifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
 
-acc_train = accuracy_score(y_train_encode, output_train)
-acc_test = accuracy_score(y_test_encode, output_test)
-print(f&#39;The accuracy on the train set is equal to {round(acc_train*100,1)}%&#39;)
-print(f&#39;The accuracy on the test set is equal to {round(acc_test*100,1)}%&#39;)
+<span class="n">acc_train</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_train_encode</span><span class="p">,</span> <span class="n">output_train</span><span class="p">)</span>
+<span class="n">acc_test</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test_encode</span><span class="p">,</span> <span class="n">output_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The accuracy on the train set is equal to </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">acc_train</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="si">}</span><span class="s1">%&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The accuracy on the test set is equal to </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">acc_test</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="si">}</span><span class="s1">%&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
+<div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy on the train set is equal to 98.8%
-The accuracy on the test set is equal to 86.6%
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy on the train set is equal to 99.0%
+The accuracy on the test set is equal to 85.4%
 </pre></div>
 </div>
 </div>
@@ -839,26 +885,24 @@ The accuracy on the test set is equal to 86.6%
 <span class="n">bestXGBClassifier</span><span class="o">.</span><span class="n">save_model</span><span class="p">(</span><span class="s2">&quot;bestXGBClassifier.txt&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt 
 fig, ax = plt.subplots(1,1,figsize=(20,10))
 xgb.plot_importance(XGBClassifier, ax = ax, height=0.4,max_num_features =12)
+plt.show()
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot: title={&#39;center&#39;: &#39;Feature importance&#39;}, xlabel=&#39;F score&#39;, ylabel=&#39;Features&#39;&gt;
-</pre></div>
-</div>
-<img alt="../_images/Classification_10_1.png" src="../_images/Classification_10_1.png" />
+<img alt="../_images/Classification_12_0.png" src="../_images/Classification_12_0.png" />
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>Cover_Type = XGBClassifier.predict(test.drop(columns=[&quot;Id&quot;]))
-predictions = pd.DataFrame({&quot;Id&quot;:test.Id,&quot;Cover_Type&quot;:Cover_Type})
-predictions[&quot;Cover_Type&quot;] = le.inverse_transform(predictions[&quot;Cover_Type&quot;])
+predictions = pd.DataFrame({&quot;Id&quot;:test.Id,&quot;Predicted_Cover_Type&quot;:Cover_Type})
+predictions[&quot;Predicted_Cover_Type&quot;] = le.inverse_transform(predictions[&quot;Predicted_Cover_Type&quot;])
 #predictions.to_csv(&quot;data/XGBClassifierPredictions.csv&quot;,index=False)
 predictions
 </pre></div>
@@ -884,7 +928,7 @@ predictions
     <tr style="text-align: right;">
       <th></th>
       <th>Id</th>
-      <th>Cover_Type</th>
+      <th>Predicted_Cover_Type</th>
     </tr>
   </thead>
   <tbody>
@@ -906,7 +950,7 @@ predictions
     <tr>
       <th>3</th>
       <td>4</td>
-      <td>5</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>4</th>
@@ -948,34 +992,37 @@ predictions
 <p>581012 rows × 2 columns</p>
 </div></div></div>
 </div>
+<p>Once your XGBoost model is trained, you can dump a human readable description of it into a text file:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">XGBClassifier</span><span class="o">.</span><span class="n">dump_model</span><span class="p">(</span><span class="s1">&#39;dump.raw.txt&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 </section>
 <section id="catboost-classifier">
 <h3>CatBoost Classifier<a class="headerlink" href="#catboost-classifier" title="Permalink to this headline">#</a></h3>
-<p>CatBoost is one of the most popular and powerfull tool for datascience.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from catboost import CatBoostClassifier
-CATBClassifier = CatBoostClassifier(silent=True)
-CATBClassifier.fit(X_train, y_train_encode)
+<p>CATBoost is another popular open-source machine learning algorithm based on gradient boosting, that was developed by Yandex in 2017. The main difference between XGBoost and CATboost is that XGBoost is a general-purpose boosting algorithm, while CATboost is a specialized algorithm designed to handle categorical features. CATboost is in a way a specialized version of XGBoost which has been optimized for working with categorical features. It uses a technique called ordered boosting, which is specifically designed to handle categorical features. This allows it to better handle data with high cardinality and missing values. It also uses a specialized algorithm for calculating the feature importance, which is better suited for categorical features.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">catboost</span> <span class="kn">import</span> <span class="n">CatBoostClassifier</span>
 
-output_train = CATBClassifier.predict(X_train)
-output_test = CATBClassifier.predict(X_test)
+<span class="n">CATBClassifier</span> <span class="o">=</span> <span class="n">CatBoostClassifier</span><span class="p">(</span><span class="n">silent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">CATBClassifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train_encode</span><span class="p">)</span>
 
-acc_train = accuracy_score(y_train_encode, output_train)
-acc_test = accuracy_score(y_test_encode, output_test)
-print(f&#39;The accuracy on the train set is equal to {round(acc_train*100,1)}%&#39;)
-print(f&#39;The accuracy on the test set is equal to {round(acc_test*100,1)}%&#39;)
+<span class="n">output_train</span> <span class="o">=</span> <span class="n">CATBClassifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">output_test</span> <span class="o">=</span> <span class="n">CATBClassifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="n">acc_train</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_train_encode</span><span class="p">,</span> <span class="n">output_train</span><span class="p">)</span>
+<span class="n">acc_test</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test_encode</span><span class="p">,</span> <span class="n">output_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The accuracy on the train set is equal to </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">acc_train</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="si">}</span><span class="s1">%&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The accuracy on the test set is equal to </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">acc_test</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="si">}</span><span class="s1">%&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
+<div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy on the train set is equal to 94.3%
-The accuracy on the test set is equal to 86.5%
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy on the train set is equal to 94.8%
+The accuracy on the test set is equal to 84.7%
 </pre></div>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>feature_importance = CATBClassifier.feature_importances_[:12]
 sorted_idx = np.argsort(feature_importance)
@@ -983,14 +1030,12 @@ fig = plt.figure(figsize=(12, 6))
 plt.barh(range(len(sorted_idx)), feature_importance[sorted_idx], align=&#39;center&#39;)
 plt.yticks(range(len(sorted_idx)), np.array(X_test.columns)[sorted_idx])
 plt.title(&#39;Feature Importance&#39;)
+plt.show()
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Feature Importance&#39;)
-</pre></div>
-</div>
-<img alt="../_images/Classification_14_1.png" src="../_images/Classification_14_1.png" />
+<img alt="../_images/Classification_18_0.png" src="../_images/Classification_18_0.png" />
 </div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;random_strength&quot;</span><span class="p">:[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span>
@@ -1013,6 +1058,220 @@ plt.title(&#39;Feature Importance&#39;)
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The accuracy on the test set is equal to </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">acc_test</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="si">}</span><span class="s1">%&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+</section>
+<section id="knn-k-nearest-neighbors">
+<h3>KNN (K Nearest Neighbors)<a class="headerlink" href="#knn-k-nearest-neighbors" title="Permalink to this headline">#</a></h3>
+<section id="what-is-knn">
+<h4>What is KNN<a class="headerlink" href="#what-is-knn" title="Permalink to this headline">#</a></h4>
+<p>K Nearest Neighbors (KNN) is a supervised machine learning algorithm that can be used for both classification and regression tasks. It is a non-parametric algorithm meaning that it does not make assumptions about the underlying data distribution. The KNN algorithm works by finding the ‘K’ closest data points in the training data set and then using them to make predictions about new data points. The prediction is based on the majority of the ‘K’ closest data points.</p>
+<p>To classify a new data point, KNN finds the ‘K’ closest data points in the training set and determines the class of the new data point based on the majority vote of the ‘K’ closest points. For regression tasks, the KNN algorithm finds the ‘K’ closest data points and then calculates the average value of the ‘K’ closest points to predict the value of the new data point.</p>
+<p>KNN is a simple yet powerful algorithm for both classification and regression tasks. It is easy to understand and implement and does not require any assumptions about the data distribution. It also does not require much tuning of the parameters, making it an attractive option for many machine learning tasks.</p>
+<p>However, the KNN algorithm does have some drawbacks. It can be computationally expensive and can be sensitive to outliers in the data set. It also tends to overfit data when the number of neighbors is too large. Despite these drawbacks, KNN remains a popular choice for many machine learning tasks.</p>
+<p>Let <span class="math notranslate nohighlight">\(x_i\)</span> be a training data point with <span class="math notranslate nohighlight">\(n\)</span> features and let <span class="math notranslate nohighlight">\(y_i\)</span> be the corresponding label. For an unseen test point <span class="math notranslate nohighlight">\(x_j\)</span>, the KNN algorithm assigns the label <span class="math notranslate nohighlight">\(y_j\)</span> according to the following formula:</p>
+<div class="math notranslate nohighlight">
+\[
+y_j = \frac{1}{k}\sum_{i=1}^{k}y_i
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(k\)</span> is the number of nearest neighbors. The distance between a training point <span class="math notranslate nohighlight">\(x_i\)</span> and the test point <span class="math notranslate nohighlight">\(x_j\)</span> is computed using a distance metric such as Euclidean distance. The KNN algorithm assigns the label of the most common class among the k-nearest neighbors.</p>
+<p>Recall that the Euclidean distance between p and q in <span class="math notranslate nohighlight">\(n\)</span> dimensions is defined as:</p>
+<div class="math notranslate nohighlight">
+\[
+d(p,q) = \sqrt{\sum_{i=1}^{n} (q_i - p_i)^2}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\text{with $q_i - p_i$ the distance between the $i^{th}$ feature}
+\]</div>
+<p><em>Note : in 2 dimensions, it corresponds to the pythagorian theorem.</em></p>
+</section>
+<section id="knn-with-python">
+<h4>KNN with python<a class="headerlink" href="#knn-with-python" title="Permalink to this headline">#</a></h4>
+<p>Now let’s see how to implement KNN in Python. First, we create a dataset with 3 features and 3 classes. This can represent 3 groups of customers, each of wich is based on 3 paramters, the age, the location, and the time since the last purchase for instance. This is our labeled data. We know want to predict in wich group a new customer will be. This new customer is represented in yellow below.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from collections import Counter
+from sklearn.datasets import make_classification
+
+#Here we will work only with X in 3 dimensions, with only 3 useful features 
+X,y = make_classification(n_samples=200,n_features=3, n_informative=3, n_redundant=0, n_classes=3,n_clusters_per_class=1,class_sep=5,random_state=3) 
+X[:,0] = X[:,0].astype(&#39;int&#39;)+30
+X[:,1] = X[:,1].astype(&#39;int&#39;)
+X[:,2] = X[:,2].astype(&#39;int&#39;)+10
+
+data = pd.DataFrame({&quot;Age&quot;:X[:,0],&quot;Location&quot;:X[:,1],&quot;Last purchase&quot;:X[:,2],&quot;class&quot;:y})
+print(&quot;The dataset containing information about customers: &quot;)
+data.head()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The dataset containing information about customers: 
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Age</th>
+      <th>Location</th>
+      <th>Last purchase</th>
+      <th>class</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>35.0</td>
+      <td>5.0</td>
+      <td>5.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>36.0</td>
+      <td>4.0</td>
+      <td>9.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>36.0</td>
+      <td>5.0</td>
+      <td>5.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>25.0</td>
+      <td>4.0</td>
+      <td>5.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>35.0</td>
+      <td>5.0</td>
+      <td>15.0</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="kn">import</span> <span class="n">Axes3D</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="kn">import</span> <span class="n">ListedColormap</span>
+
+<span class="c1"># axes instance</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">Axes3D</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">auto_add_to_figure</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">ListedColormap</span><span class="p">([</span><span class="s2">&quot;#FF0000&quot;</span><span class="p">,</span> <span class="s2">&quot;#00FF00&quot;</span><span class="p">,</span> <span class="s2">&quot;#0000FF&quot;</span><span class="p">])</span>
+<span class="c1"># plot</span>
+<span class="n">sc</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span><span class="mi">2</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="s1">&#39;yellow&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">155</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;X&quot;</span><span class="p">,</span><span class="n">edgecolors</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Age&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Location&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s1">&#39;Weeks since last purchase&#39;</span><span class="p">)</span>
+
+<span class="c1"># legend</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="o">*</span><span class="n">sc</span><span class="o">.</span><span class="n">legend_elements</span><span class="p">(),</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Class&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Dataset in 3D space&quot;</span><span class="p">)</span>
+<span class="c1"># save</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/Classification_24_0.png" src="../_images/Classification_24_0.png" />
+</div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># KNN Model from scratch : </span>
+
+<span class="k">def</span> <span class="nf">euclidean_distance</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">x1</span> <span class="o">-</span> <span class="n">x2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+
+<span class="k">class</span> <span class="nc">KNN</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span>
+
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">X_train</span> <span class="o">=</span> <span class="n">X</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_train</span> <span class="o">=</span> <span class="n">y</span>
+
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_predict</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">X</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        
+        <span class="c1"># We start by computing the distances </span>
+        <span class="n">distances</span> <span class="o">=</span> <span class="p">[</span><span class="n">euclidean_distance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x_train</span><span class="p">)</span> <span class="k">for</span> <span class="n">x_train</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">X_train</span><span class="p">]</span>
+
+        <span class="c1"># Then we sort by distance </span>
+        <span class="n">k_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">distances</span><span class="p">)[:</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">]</span>
+        <span class="n">k_neighbor_labels</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">y_train</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">k_idx</span><span class="p">]</span>
+
+        <span class="c1"># return the most common class label</span>
+        <span class="n">most_common</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">k_neighbor_labels</span><span class="p">)</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">most_common</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="cell tag_remove-input docutils container">
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># KNN Model with Sklearn, and comparison :</span>
+<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsRegressor</span>
+
+<span class="n">knn_model_Scratch</span> <span class="o">=</span> <span class="n">KNN</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">knn_model_SKlearn</span> <span class="o">=</span> <span class="n">KNeighborsRegressor</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+    <span class="p">)</span>
+
+<span class="n">knn_model_Scratch</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">knn_model_SKlearn</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">new_customer_data</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">32</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">)]</span>
+
+<span class="n">predictions_Scratch</span> <span class="o">=</span> <span class="n">knn_model_Scratch</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">new_customer_data</span><span class="p">)</span>
+<span class="n">predictions_SKlearn</span> <span class="o">=</span> <span class="n">knn_model_SKlearn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">new_customer_data</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The model from scratch predicted the class: &quot;</span><span class="p">,</span> <span class="n">predictions_Scratch</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The model from sklearn predicted the class: &quot;</span><span class="p">,</span> <span class="n">predictions_SKlearn</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The accuracy of scratch model is: &quot;</span><span class="p">,</span> 
+    <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="n">knn_model_Scratch</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The accuracy of sklearn model is: &quot;</span><span class="p">,</span> 
+    <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="n">knn_model_SKlearn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)))</span>
+</pre></div>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The model from scratch predicted the class:  [0]
+The model from sklearn predicted the class:  [0.]
+The accuracy of scratch model is:  1.0
+The accuracy of sklearn model is:  1.0
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 </section>
 </section>

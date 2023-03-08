@@ -11,7 +11,7 @@ parts:
     - file: 1. Intro/What is python
     - file: 1. Intro/Presentation of this blog
 
-  - caption: Data Manipulation and Data Visualization
+  - caption: Working with Data
     chapters:
     - file: 2. Data visualisation/Data manipulation
     - file: 2. Data visualisation/Data visualization

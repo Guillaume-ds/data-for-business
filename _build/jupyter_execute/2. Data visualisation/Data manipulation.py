@@ -190,3 +190,51 @@ for column, ax in zip(Continous_Values, axs.ravel()):
     sns.kdeplot(x=train[column],hue=train['Gender'],ax=ax,fill=True)
 plt.show()
 
+
+# ## Tips and Tricks 
+
+# In[12]:
+
+
+# Loop with a modulo
+
+for i in range(10):
+    print(i%3, i//3)
+
+
+# In[13]:
+
+
+for i in range(10):
+    print(i//5)
+
+
+# In[14]:
+
+
+from enum import Enum
+class Direction(Enum):
+    RIGHT = 1
+    LEFT = 2
+    UP = 3
+    DOWN = 4
+
+
+# In[15]:
+
+
+memory = [] #A list of tuples containing the client ID, the store location and the purchase 
+memory.append((1,"Paris",25))
+memory.append((13,"Paris",23))
+memory.append((17,"Marseille",25))
+print(memory)
+
+IDs, Stores, Purchases = zip(*memory)
+print(IDs, '\n', Stores, '\n', Purchases)
+
+
+# In[ ]:
+
+
+
+
